@@ -45,12 +45,12 @@ funcione tanto na plataforma web quanto na mobile
     <tbody>
         <tr>
             <td>Arthur Mergulhão</td>
-            <td><a href = "https://br.linkedin.com/public-profile/in/arthur-mergulhao-5a7aa4186?challengeId=AQEh11qrioz-TgAAAXSsyfiaeTgNft25RGw_BgbYS3y_WWpdZ3uKYIP0UU0b1PPAw0LaM46vUTfLGG5KVXhD1y7t9KvXON_J6Q&submissionId=97029fc7-8c91-3616-1bb7-2571c77b9d21"></a></td>
+            <td><a href = "https://www.linkedin.com/in/arthur-mergulhao-5a7aa4186/?originalSubdomain=br">Linkedin</a></td>
             <td><a href = "https://github.com/AAMergulhao">Github</a></td>
         </tr>
         <tr>
             <td>Caique Santos</td> 
-            <td><a href = "https://www.linkedin.com/in/caique-rafael-dos-santos-477442195/>Linkedin</a></td> 
+            <td><a href = "https://www.linkedin.com/in/caique-rafael-dos-santos-477442195/">Linkedin</a></td> 
             <td><a href = "https://github.com/zKIQ"> Github</a> </td>
         </tr>
         <tr>
@@ -60,12 +60,12 @@ funcione tanto na plataforma web quanto na mobile
         </tr>
         <tr>
             <td>Nache Matos</td>
-            <td><a href = "https://github.com/Nache111"></a></td>
+            <td><a href = "https://github.com/Nache111">Github</a></td>
         </tr>
         <tr>
             <td>Rafael Rezende</td> 
             <td><a href = "https://www.linkedin.com/mwlite/in/rafael-rezende-633249143">Linkedin</a></td>
-            <td><a href = "https://github.com/RafaelRez75"></a></td>
+            <td><a href = "https://github.com/RafaelRez75">Github</a></td>
         </tr>
     </tbody>
 </table>
