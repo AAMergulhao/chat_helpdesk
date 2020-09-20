@@ -40,7 +40,7 @@ funcione tanto na plataforma web quanto na mobile
 
 <table>
     <thead>
-        <th><th>Integrantes</th></th>
+        <th>Integrantes</th>
     </thead>
     <tbody>
         <tr>
