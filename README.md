@@ -40,7 +40,7 @@ funcione tanto na plataforma web quanto na mobile
 
 <table>
     <thead>
-        <th>Integrantes</th>
+        <th><th>Integrantes</th></th>
     </thead>
     <tbody>
         <tr>
@@ -60,6 +60,7 @@ funcione tanto na plataforma web quanto na mobile
         </tr>
         <tr>
             <td>Nache Matos</td>
+            <td>Linkedin</td>
             <td><a href = "https://github.com/Nache111">Github</a></td>
         </tr>
         <tr>
