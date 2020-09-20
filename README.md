@@ -37,9 +37,9 @@ funcione tanto na plataforma web quanto na mobile
 - MySQL 
 
 # Integrantes 
-
+# Markdown
 - Arthur Alves 
-- Caique Santos  Linkedin(https://www.linkedin.com/in/caique-rafael-dos-santos-477442195/) 
-- Fabiola Siqueira Linkedin (https://www.linkedin.com/mwlite/in/fab%C3%ADola-siqueira-874b09192)
+- Caique Santos  [Linkedin](https://www.linkedin.com/in/caique-rafael-dos-santos-477442195/) 
+- Fabiola Siqueira [Linkedin](https://www.linkedin.com/mwlite/in/fab%C3%ADola-siqueira-874b09192)
 - Nache Matos
-- Rafael Rezende Linkedin(https://www.linkedin.com/mwlite/in/rafael-rezende-633249143)
+- Rafael Rezende [Linkedin](https://www.linkedin.com/mwlite/in/rafael-rezende-633249143)
