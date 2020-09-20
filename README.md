@@ -1,7 +1,7 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/PI-Time-4/chat_helpdesk) 
 # Chat Help Desk - Projeto Anova
 
-    O objetivo do Projeto Integrador proposto pela instituição Fatec - Prof. Jessen Vidal é resolver um problema 
+O objetivo do Projeto Integrador proposto pela instituição Fatec - Prof. Jessen Vidal é resolver um problema 
 de comunicação interna entre os colaboradores e usuários, representados pela empresa Anova Sistemas. 
     Para resolver esse problema será necessária a construção de um sistema que seja responsivo, ou seja, uma aplicação que 
 funcione tanto na plataforma web quanto na mobile 
@@ -38,8 +38,16 @@ funcione tanto na plataforma web quanto na mobile
 
 # Integrantes 
 # Markdown
-- Arthur Alves 
-- Caique Santos  [Linkedin](https://www.linkedin.com/in/caique-rafael-dos-santos-477442195/) 
-- Fabiola Siqueira [Linkedin](https://www.linkedin.com/mwlite/in/fab%C3%ADola-siqueira-874b09192)
-- Nache Matos
-- Rafael Rezende [Linkedin](https://www.linkedin.com/mwlite/in/rafael-rezende-633249143)
+<table>
+    <thead>
+        <th>Integrantes</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Arthur Mergulhão | | [Github](https://github.com/AAMergulhao)</td>
+  Caique Santos | [Linkedin](https://www.linkedin.com/in/caique-rafael-dos-santos-477442195/) | [Github] ()
+  Fabiola Siqueira | [Linkedin](https://www.linkedin.com/mwlite/in/fab%C3%ADola-siqueira-874b09192) | [Github](https://github.com/fabsiqueira)
+  Nache Matos | | [Github](https://github.com/Nache111)
+  Rafael Rezende | [Linkedin](https://www.linkedin.com/mwlite/in/rafael-rezende-633249143) | [Github](https://github.com/RafaelRez75)
+    </tbody>
+</table>
