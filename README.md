@@ -36,18 +36,36 @@ funcione tanto na plataforma web quanto na mobile
 - Spring Data 
 - MySQL 
 
-# Integrantes 
-# Markdown
+# Membros do Grupo
+
 <table>
     <thead>
         <th>Integrantes</th>
     </thead>
     <tbody>
         <tr>
-            <td>Arthur Mergulhão | | [Github](https://github.com/AAMergulhao)</td>
-  Caique Santos | [Linkedin](https://www.linkedin.com/in/caique-rafael-dos-santos-477442195/) | [Github] ()
-  Fabiola Siqueira | [Linkedin](https://www.linkedin.com/mwlite/in/fab%C3%ADola-siqueira-874b09192) | [Github](https://github.com/fabsiqueira)
-  Nache Matos | | [Github](https://github.com/Nache111)
-  Rafael Rezende | [Linkedin](https://www.linkedin.com/mwlite/in/rafael-rezende-633249143) | [Github](https://github.com/RafaelRez75)
+            <td>Arthur Mergulhão</td>
+            <td><a href = "https://br.linkedin.com/public-profile/in/arthur-mergulhao-5a7aa4186?challengeId=AQEh11qrioz-TgAAAXSsyfiaeTgNft25RGw_BgbYS3y_WWpdZ3uKYIP0UU0b1PPAw0LaM46vUTfLGG5KVXhD1y7t9KvXON_J6Q&submissionId=97029fc7-8c91-3616-1bb7-2571c77b9d21"></a></td>
+            <td><a href = "https://github.com/AAMergulhao">Github</a></td>
+        </tr>
+        <tr>
+            <td>Caique Santos</td> 
+            <td><a href = "https://www.linkedin.com/in/caique-rafael-dos-santos-477442195/>Linkedin</a></td> 
+            <td><a href = "https://github.com/zKIQ"> Github</a> </td>
+        </tr>
+        <tr>
+            <td>Fabiola Siqueira </td>
+            <td> <a href= "https://www.linkedin.com/mwlite/in/fab%C3%ADola-siqueira-874b09192">Linkedin</a></td>
+            <td> <a href= "https://github.com/fabsiqueira">Github</a></td>
+        </tr>
+        <tr>
+            <td>Nache Matos</td>
+            <td><a href = "https://github.com/Nache111"></a></td>
+        </tr>
+        <tr>
+            <td>Rafael Rezende</td> 
+            <td><a href = "https://www.linkedin.com/mwlite/in/rafael-rezende-633249143">Linkedin</a></td>
+            <td><a href = "https://github.com/RafaelRez75"></a></td>
+        </tr>
     </tbody>
 </table>
