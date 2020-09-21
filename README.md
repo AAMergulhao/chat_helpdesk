@@ -24,7 +24,7 @@ funcione tanto na plataforma web quanto na mobile
 
 ## Sprint 1 
 
-- Protótipo Navegável da idealização do Projeto
+- <a href = "https://pitime4.herokuapp.com">Protótipo Navegável da idealização do Projeto</a>
 - Estruturação do Banco de Dados Relacional 
 - Documentação (Escopo do Projeto, TAP, Gerenciamento de Cronograma)
 
