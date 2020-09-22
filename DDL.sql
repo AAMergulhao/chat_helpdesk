@@ -52,8 +52,8 @@ create table conversas (
   primary key (chat_id)
 );
 
-insert into usr_usuario (usr_nome, usr_senha)
-    values('Fabiola', '12345');
+insert into usr_usuario (usr_nome, usr_senha, usr_avatar) values('Fabiola', '12345', 'base64 image');
+insert into usr_usuario (usr_nome, usr_senha, usr_avatar) values('Arthur', '12342345', 'base64 image');
 insert into aut_autorizacao (aut_nome)
     values('ROLE_ADMIN');
 insert into uau_usuario_autorizacao values (1, 1);
@@ -63,4 +63,3 @@ INSERT INTO `conversas` (`chat_id`, `origem`, `conteudo`, `status`, `data`, `ini
 (3, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
 (4, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
 (5, 'painel', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2);
-COMMIT;
