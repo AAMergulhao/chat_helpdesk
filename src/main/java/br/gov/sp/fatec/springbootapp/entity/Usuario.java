@@ -27,6 +27,9 @@ public class Usuario {
     @Column(name = "usr_nome")
     private String nome;
 
+    @Column(name = "usr_avatar")
+    private String avatar;
+
     @Column(name = "usr_senha")
     private String senha;
 
@@ -49,6 +52,13 @@ public class Usuario {
     }
     public void setNome(String nome){
         this.nome = nome;
+    }
+
+    public String getAvatar(){
+        return  this.avatar;
+    }
+    public void setAvatar(String avatar){
+        this.avatar = avatar;
     }
     public String getSenha(){
         return  this.senha;

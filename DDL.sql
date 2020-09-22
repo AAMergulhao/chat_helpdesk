@@ -57,3 +57,10 @@ insert into usr_usuario (usr_nome, usr_senha)
 insert into aut_autorizacao (aut_nome)
     values('ROLE_ADMIN');
 insert into uau_usuario_autorizacao values (1, 1);
+insert into usr_notificacoes  values (1, 1, 'Teste 2', 'Teste teste teste tet','2');
+INSERT INTO `conversas` (`chat_id`, `origem`, `conteudo`, `status`, `data`, `inicio`, `final`, `participante1_id`, `participante2_id`) VALUES
+(1, 'cliente', 'string json', 1, '2020-09-20', '21:36:02', '21:36:02', 1, 2),
+(3, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
+(4, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
+(5, 'painel', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2);
+COMMIT;

@@ -17,7 +17,7 @@ public class Notificacao {
     @Column(name = "not_id")
     private Long id;
 
-    @Column(name = "user_id")
+    @Column(name = "usr_id")
     private Long user_id;
 
     @Column(name = "not_titulo")

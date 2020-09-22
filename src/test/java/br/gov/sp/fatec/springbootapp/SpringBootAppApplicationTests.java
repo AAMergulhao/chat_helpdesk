@@ -105,8 +105,9 @@ class SpringBootAppApplicationTests {
     @Test
     void testaInsercao(){
         Usuario usuario = new  Usuario();
-        usuario.setNome("Usuario");
+        usuario.setNome("Teste23");
         usuario.setSenha("senha");
+        usuario.setAvatar("base64 image");
         usuario.setAutorizacoes(new HashSet<Autorizacao>());
         Autorizacao aut = new Autorizacao();
         aut.setNome("ROLE_USUARIO");
@@ -121,6 +122,7 @@ class SpringBootAppApplicationTests {
         Usuario usuario = new  Usuario();
         usuario.setNome("Usuario2");
         usuario.setSenha("senha");
+        usuario.setAvatar("base64 image");
         usuarioRepo.save(usuario);
         Autorizacao aut = new Autorizacao();
         aut.setNome("ROLE_USUARIO2");
@@ -183,7 +185,7 @@ class SpringBootAppApplicationTests {
 
     @Test
     void testaServicoCriaUsuario(){
-        Usuario usuario = segService.criarUsuario("normal", "senha123", "ROLE_USUARIO");
+        Usuario usuario = segService.criarUsuario("normal", "senha123","base64 image", "ROLE_USUARIO");
         assertNotNull(usuario);
     }
 
