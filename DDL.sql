@@ -32,7 +32,7 @@ create table uau_usuario_autorizacao (
 
 create table usr_notificacoes (
   not_id bigint unsigned not null auto_increment,
-  user_id bigint not null,
+  usr_id bigint not null,
   not_titulo varchar(20) not null,
   not_conteudo varchar(255) not null,
   not_send_by bigint not null,
