@@ -32,11 +32,13 @@ create table uau_usuario_autorizacao (
 
 create table usr_notificacoes (
   not_id bigint unsigned not null auto_increment,
-  usr_id bigint not null,
+  usr_id bigint unsigned not null,
   not_titulo varchar(20) not null,
   not_conteudo varchar(255) not null,
   not_send_by bigint not null,
-  primary key (not_id)
+  primary key (not_id),
+  KEY `usr_id` (`usr_id`),
+  CONSTRAINT `notificacoes_fk` FOREIGN KEY (`usr_id`) REFERENCES `usr_usuario` (`usr_id`)
 );
 
 create table conversas (
