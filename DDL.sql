@@ -37,7 +37,7 @@ create table usr_notificacoes (
   not_conteudo varchar(255) not null,
   not_send_by bigint not null,
   primary key (not_id),
-  KEY `usr_id` (`usr_id`),
+  KEY `usr_id` (`usr_id`),Ta
   CONSTRAINT `usr_id_fk` FOREIGN KEY (`usr_id`) REFERENCES `usr_usuario` (`usr_id`)
 );
 
@@ -59,7 +59,7 @@ insert into usr_usuario (usr_nome, usr_senha, usr_avatar) values('Arthur', '1234
 insert into aut_autorizacao (aut_nome)
     values('ROLE_ADMIN');
 insert into uau_usuario_autorizacao values (1, 1);
-insert into usr_notificacoes  values (1, 1, 'Teste 2', 'Teste teste teste tet','2');
+insert into usr_notificacoes  values (1, 1, 'Teste 2', 'Teste teste teste tet',2);
 INSERT INTO `conversas` (`chat_id`, `origem`, `conteudo`, `status`, `data`, `inicio`, `final`, `participante1_id`, `participante2_id`) VALUES
 (1, 'cliente', 'string json', 1, '2020-09-20', '21:36:02', '21:36:02', 1, 2),
 (3, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
