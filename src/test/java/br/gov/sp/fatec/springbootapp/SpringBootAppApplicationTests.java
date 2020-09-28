@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.HashSet;
 import java.util.List;
+import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -89,17 +90,33 @@ class SpringBootAppApplicationTests {
         assertFalse(conversas.isEmpty());
     }
 
+    //Serviço que cria notificações
     @Test
     void testeCriarNotificacao(){
         Notificacao notificacao = notService.criarNotificacao("Fabiola","Arthur","Teste", "teste conteudo");
         assertNotNull(notificacao.getId());
     }
+
+    //Transação com duas inserções no banco de dados
+    @Test
+    void testeCriarNotificacaoDupla(){
+        LinkedList<Notificacao> notificacoes= notService.criarNotificacaoDupla("Fabiola","Arthur","Arthur","Teste", "teste conteudo");
+        assertNotNull(notificacoes.isEmpty());
+    }
     
-    // @Test
-    // void testeListarNotificacoesPorUsuario(){
-    //     List<Notificacao> notificacoes = usuarioRepo.buscaNotificacoesPorUsuario(1L);
-    //     assertFalse(notificacoes.isEmpty());
-    // }
+    //Consulto com dois parametros Id do remetente e titulo da notificacao
+    @Test
+    void BuscarNotificacaoPorTituloRemetente(){
+        List<Notificacao> notificacao = notRepo.findByTituloERemetente("Teste 2", 2L);
+        assertFalse(notificacao.isEmpty());
+    }
+
+    //Consulta com join
+    @Test 
+    void testeBuscaNotificacoesPorIdUsuario(){
+        List<Notificacao> notificacoes = notRepo.buscaPorNomeUsuario(1L);
+        assertFalse(notificacoes.isEmpty());
+    }
 
     @Test
     void testaInsercao(){
@@ -176,7 +193,8 @@ class SpringBootAppApplicationTests {
         List<Usuario> usuarios = usuarioRepo.findByAutorizacoesNome("ROLE_ADMIN");
         assertFalse(usuarios.isEmpty());
     }
-     @Test 
+    
+    @Test 
     void testaBuscaUsuarioNomeAutorizacaoQuery(){
         List<Usuario> usuarios = usuarioRepo.buscaPorNomeAutorizacao("ROLE_ADMIN");
         assertFalse(usuarios.isEmpty());
