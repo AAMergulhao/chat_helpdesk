@@ -37,7 +37,7 @@ create table usr_notificacoes (
   not_conteudo varchar(255) not null,
   not_send_by bigint not null,
   primary key (not_id),
-  KEY `usr_id` (`usr_id`),Ta
+  KEY `usr_id` (`usr_id`),
   CONSTRAINT `usr_id_fk` FOREIGN KEY (`usr_id`) REFERENCES `usr_usuario` (`usr_id`)
 );
 
