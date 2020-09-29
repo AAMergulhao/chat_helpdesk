@@ -29,8 +29,8 @@ public class NotificacaoServiceImpl implements NotificacaoService {
         Usuario usuarioRemetente = usuarioRepo.buscaUsuarioPorNome(nomeRemetente);
         
         Notificacao notificacao = new Notificacao();
-        notificacao.setTitulo("Titulo teste");
-        notificacao.setConteudo("teste teste teste");
+        notificacao.setTitulo(titulo);
+        notificacao.setConteudo(conteudo);
         notificacao.setSendBy(usuarioRemetente.getId());
         notificacao.setUsuario(usuarioDestinatario);
         notRepo.save(notificacao);
@@ -47,16 +47,16 @@ public class NotificacaoServiceImpl implements NotificacaoService {
 
     
         Notificacao notificacao1 = new Notificacao();
-        notificacao1.setTitulo("Titulo teste");
-        notificacao1.setConteudo("teste teste teste");
+        notificacao1.setTitulo(titulo);
+        notificacao1.setConteudo(conteudo);
         notificacao1.setSendBy(usuarioRemetente.getId());
         notificacao1.setUsuario(usuarioDestinatario1);
         notRepo.save(notificacao1);
         notificacoes.push(notificacao1);
 
         Notificacao notificacao2 = new Notificacao();
-        notificacao2.setTitulo("Titulo teste");
-        notificacao2.setConteudo("teste teste teste");
+        notificacao2.setTitulo(titulo);
+        notificacao2.setConteudo(conteudo);
         notificacao2.setSendBy(usuarioRemetente.getId());
         notificacao2.setUsuario(usuarioDestinatario2);
         notRepo.save(notificacao2);
