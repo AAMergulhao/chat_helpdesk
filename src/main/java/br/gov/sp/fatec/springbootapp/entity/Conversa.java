@@ -1,116 +1,64 @@
 package br.gov.sp.fatec.springbootapp.entity;
 
+import java.util.Set;
 
-import java.sql.Date;
-import java.sql.Time;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springbootapp.controller.View;
 
 @Entity
 @Table(name = "conversas")
 public class Conversa {
 
+    @JsonView(View.ConversaResumo.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_id")
     private Long id;
 
-    @Column(name = "status")
-    private Long status;
+    @JsonView(View.ConversaResumo.class)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "conversas")
+    private Set<Usuario> usuarios;
 
-    @Column(name = "origem")
-    private String origem;
-
-    @Column(name = "conteudo")
-    private String conteudo;
-
-    @Column(name = "data")
-    private Date data;
-
-    @Column(name = "inicio")
-    private Time inicio;
-
-    @Column(name = "final")
-    private Time fim;
-
-    @Column(name = "participante1_id")
-    private Long participante1_id;
-
-    @Column(name = "participante2_id")
-    private Long participante2_id;
+    @JsonView(View.ConversaResumo.class)
+    @OneToMany(mappedBy="conversa", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Mensagem> mensagens;
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getStatus() {
-        return this.status;
+    public Set<Usuario> getUsuarios() {
+        return usuarios;
     }
 
-    public void setStatus(Long status) {
-        this.status = status;
+    public void setUsuarios(Set<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 
-    public String getOrigem() {
-        return this.origem;
+    public Set<Mensagem> getMensagens() {
+        return mensagens;
     }
 
-    public void setOrigem(String origem) {
-        this.origem = origem;
+    public void setMensagens(Set<Mensagem> mensagens) {
+        this.mensagens = mensagens;
     }
 
-    public String getConteudo() {
-        return this.conteudo;
-    }
-
-    public void setConteudo(String conteudo) {
-        this.conteudo = conteudo;
-    }
-
-    public Long getPartipante1Id() {
-        return this.participante1_id;
-    }
-
-    public void setPartipante1Id(Long participante1_id) {
-        this.participante1_id = participante1_id;
-    }
-
-    public Long getPartipante2Id() {
-        return this.participante1_id;
-    }
-    public void setPartipante2Id(Long participante2_id) {
-        this.participante2_id = participante2_id;
-    }
-
-    public Date getData() {
-        return this.data;
-    }
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public Time getInicio() {
-        return this.inicio;
-    }
-
-    public void setInicio(Time inicio) {
-        this.inicio = inicio;
-    }
-
-    public Time getFim() {
-        return this.fim;
-    }
-
-    public void setFim(Time fim) {
-        this.fim = fim;
-    }
+    
 }

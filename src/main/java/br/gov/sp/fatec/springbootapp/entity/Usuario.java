@@ -1,6 +1,5 @@
 package br.gov.sp.fatec.springbootapp.entity;
 
-
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,10 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Embeddable;
+import javax.persistence.OneToOne;
 import javax.persistence.CascadeType;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springbootapp.controller.View;
+
 import java.io.Serializable;
 
 
@@ -28,6 +33,7 @@ public class Usuario implements Serializable{
     @Column(name = "usr_id")
     private Long id;
     
+    @JsonView({View.UsuarioResumo.class, View.AutorizacaoResumo.class, View.ConversaResumo.class})
     @Column(name = "usr_nome")
     private String nome;
 
@@ -37,24 +43,30 @@ public class Usuario implements Serializable{
     @Column(name = "usr_senha")
     private String senha;
 
+    @JsonView(View.UsuarioResumo.class)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "uau_usuario_autorizacao",
         joinColumns = {@JoinColumn(name = "usr_id")},
         inverseJoinColumns = {@JoinColumn(name = "aut_id")}
         )
-
-
-
-    // public Usuario(String nome,String avatar, String senha){
-    //     this.nome = nome;
-    //     this.avatar = avatar;
-    //     this.senha = senha;
-    // }
-    // public Usuario(){}
-    
-    
-
     private Set<Autorizacao> autorizacoes;
+    
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuarios_conversas",
+        joinColumns = {@JoinColumn(name = "usr_id")},
+        inverseJoinColumns = {@JoinColumn(name = "chat_id")}
+        )
+    private Set<Conversa> conversas;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuarios_mensagens",
+        joinColumns = {@JoinColumn(name = "usr_id")},
+        inverseJoinColumns = {@JoinColumn(name = "mensagem_id")}
+        )
+    private Set<Mensagem> mensagens;
+
+    @OneToOne(mappedBy="destinatario")
+    private Mensagem mensagem;
     
     @OneToMany(mappedBy="usuario", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
@@ -98,6 +110,22 @@ public class Usuario implements Serializable{
 
     public void setNotificacoes(Set<Notificacao> notificacoes){
         this.notificacoes = notificacoes;
+    }
+
+    public Set<Conversa> getConversas() {
+        return conversas;
+    }
+
+    public void setConversas(Set<Conversa> conversas) {
+        this.conversas = conversas;
+    }
+
+    public Set<Mensagem> getMensagens() {
+        return mensagens;
+    }
+
+    public void setMensagens(Set<Mensagem> mensagens) {
+        this.mensagens = mensagens;
     }
     
 }

@@ -23,7 +23,6 @@ import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.repository.NotificacaoRepository;
 import br.gov.sp.fatec.springbootapp.service.NotificacaoService;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
-import br.gov.sp.fatec.springbootapp.repository.ConversasRepository;
 
 
 
@@ -31,7 +30,6 @@ import br.gov.sp.fatec.springbootapp.repository.ConversasRepository;
 //sem nenhuma gravacao usamos transactional e rollback
 @Transactional //cada metodo tem uma conexao aberta alem da transacao
 @Rollback
-
 class SpringBootAppApplicationTests {
     
     @Autowired
@@ -49,46 +47,7 @@ class SpringBootAppApplicationTests {
     @Autowired
     private NotificacaoService notService;
 
-    @Autowired
-    private ConversasRepository conversaRepo;
 
-    
-    
-    @Test
-    void testeBuscarConversasPorIdUsuario(){
-        List<Conversa> conversas = conversaRepo.buscaConversasPorUsuario(1L);
-
-        assertFalse(conversas.isEmpty());
-    }
-
-    @Test
-    void testeCriarConversa(){
-        Conversa conversa = new Conversa();
-        conversa.setStatus(0L);
-        conversa.setOrigem("painel");
-        conversa.setConteudo("String json");
-        conversa.setData(new Date(2020,11,2));
-        conversa.setInicio(new Time(21,11,2));
-        conversa.setFim(new Time(21,11,2));
-        conversa.setPartipante1Id(1L);
-        conversa.setPartipante2Id(2L);
-        conversaRepo.save(conversa);
-        assertNotNull(conversa.getId());
-    }
-
-    @Test
-    void testeBuscarConversasVistaDeChat(){
-        List<Conversa> conversas = conversaRepo.buscaConversasClienteAtivas();
-
-        assertFalse(conversas.isEmpty());
-    }
-
-    @Test
-    void testeBuscarConversasHistorico(){
-        List<Conversa> conversas = conversaRepo.buscaConversasHistorico();
-
-        assertFalse(conversas.isEmpty());
-    }
 
     //Serviço que cria notificações
     @Test
@@ -121,7 +80,7 @@ class SpringBootAppApplicationTests {
     @Test
     void testaInsercao(){
         Usuario usuario = new  Usuario();
-        usuario.setNome("Teste23");
+        usuario.setNome("Teste234");
         usuario.setSenha("senha");
         usuario.setAvatar("base64 image");
         usuario.setAutorizacoes(new HashSet<Autorizacao>());
@@ -136,12 +95,12 @@ class SpringBootAppApplicationTests {
     @Test
     void testaInsercaoAutorizacao(){
         Usuario usuario = new  Usuario();
-        usuario.setNome("Usuario2");
+        usuario.setNome("Usuario3");
         usuario.setSenha("senha");
         usuario.setAvatar("base64 image");
         usuarioRepo.save(usuario);
         Autorizacao aut = new Autorizacao();
-        aut.setNome("ROLE_USUARIO2");
+        aut.setNome("ROLE_USUARIO3");
         aut.setUsuarios(new HashSet<Usuario>());
         aut.getUsuarios().add(usuario);
         autRepo.save(aut); 
@@ -200,11 +159,11 @@ class SpringBootAppApplicationTests {
         assertFalse(usuarios.isEmpty());
     }
 
-    @Test
-    void testaServicoCriaUsuario(){
-        Usuario usuario = segService.criarUsuario("normal", "senha123","base64 image", "ROLE_USUARIO");
-        assertNotNull(usuario);
-    }
+    // @Test
+    // void testaServicoCriaUsuario(){
+    //     Usuario usuario = segService.criarUsuario("normal2", "senha123","base64 image", "ROLE_USUARIO");
+    //     assertNotNull(usuario);
+    // }
 
 }
 

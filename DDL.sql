@@ -37,21 +37,40 @@ create table usr_notificacoes (
   not_conteudo varchar(255) not null,
   not_send_by bigint not null,
   primary key (not_id),
-  KEY `usr_id` (`usr_id`),
-  CONSTRAINT `usr_id_fk` FOREIGN KEY (`usr_id`) REFERENCES `usr_usuario` (`usr_id`)
+  foreign key usr_id_fk (usr_id) references usr_usuario (usr_id) on delete restrict on update cascade
 );
+
 
 create table conversas (
   chat_id bigint unsigned not null auto_increment,
-  origem varchar(20) not null,
-  conteudo varchar(255) not null,
-  status bigint not null,
-  data date NOT NULL,
-  inicio time NOT NULL,
-  final time Not Null,
-  participante1_id bigint not null,
-  participante2_id bigint not null,
   primary key (chat_id)
+);
+
+create table usuarios_conversas(
+  chat_id bigint unsigned not null,
+  usr_id bigint unsigned not null,
+  primary key (chat_id, usr_id),
+  foreign key chat_id_fk (chat_id) references conversas (chat_id) on delete restrict on update cascade,
+  foreign key usr_id_fk (usr_id) references usr_usuario (usr_id) on delete restrict on update cascade
+);
+
+create table mensagens(
+  mensagem_id bigint unsigned not null auto_increment,
+  chat_id bigint unsigned not null,
+  destinatario bigint unsigned not null,
+  data_hora varchar(20) not null,
+  conteudo varchar(255) not null,
+  primary key (mensagem_id),
+  foreign key chat_id_fk (chat_id) references conversas (chat_id) on delete restrict on update cascade,
+  foreign key destinatario_fk (destinatario) references usr_usuario (usr_id) on delete restrict on update cascade
+);
+
+create table usuarios_mensagens(
+  mensagem_id bigint unsigned not null,
+  usr_id bigint unsigned not null,
+  primary key (mensagem_id, usr_id),
+  foreign key mensagem_id_fk (mensagem_id) references mensagens (mensagem_id) on delete restrict on update cascade,
+  foreign key usr_id_fk (usr_id) references usr_usuario (usr_id) on delete restrict on update cascade
 );
 
 insert into usr_usuario (usr_nome, usr_senha, usr_avatar) values('Fabiola', '12345', 'base64 image');
@@ -60,8 +79,8 @@ insert into aut_autorizacao (aut_nome)
     values('ROLE_ADMIN');
 insert into uau_usuario_autorizacao values (1, 1);
 insert into usr_notificacoes  values (1, 1, 'Teste 2', 'Teste teste teste tet',2);
-INSERT INTO `conversas` (`chat_id`, `origem`, `conteudo`, `status`, `data`, `inicio`, `final`, `participante1_id`, `participante2_id`) VALUES
-(1, 'cliente', 'string json', 1, '2020-09-20', '21:36:02', '21:36:02', 1, 2),
-(3, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
-(4, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
-(5, 'painel', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2);
+-- INSERT INTO `conversas` (`chat_id`, `origem`, `conteudo`, `status`, `data`, `inicio`, `final`, `participante1_id`, `participante2_id`) VALUES
+-- (1, 'cliente', 'string json', 1, '2020-09-20', '21:36:02', '21:36:02', 1, 2),
+-- (3, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
+-- (4, 'cliente', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2),
+-- (5, 'painel', 'string json', 0, '2020-09-20', '21:52:11', '21:52:11', 1, 2);
