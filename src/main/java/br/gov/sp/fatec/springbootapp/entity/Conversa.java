@@ -21,7 +21,7 @@ import br.gov.sp.fatec.springbootapp.controller.View;
 @Table(name = "conversas")
 public class Conversa {
 
-    @JsonView(View.ConversaResumo.class)
+    @JsonView({View.ConversaResumo.class,View.MensagemResumo.class})
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_id")

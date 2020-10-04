@@ -7,4 +7,6 @@ public class View {
     public static class AutorizacaoResumo {}
 
     public static class ConversaResumo {}
+
+    public static class MensagemResumo {}
 }

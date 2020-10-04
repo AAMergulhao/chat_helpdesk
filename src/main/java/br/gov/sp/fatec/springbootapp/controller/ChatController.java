@@ -41,7 +41,7 @@ public class ChatController {
         return conversa;
     }
 
-    
+    @JsonView(View.MensagemResumo.class)
     @PostMapping(value = "/enviarMensagem")
     public Mensagem envarMensagem(@RequestBody ObjectNode body) {
         String nomeRemetente = body.get("nomeRemetente").asText();

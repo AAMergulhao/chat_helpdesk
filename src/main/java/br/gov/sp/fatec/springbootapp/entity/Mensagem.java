@@ -31,14 +31,15 @@ public class Mensagem {
     @Column(name = "mensagem_id")
     private Long id;
 
-    @JsonView(View.ConversaResumo.class)
+    @JsonView({View.ConversaResumo.class, View.MensagemResumo.class})
     @Column(name = "data_hora")
     private String dataHora;
 
-    @JsonView(View.ConversaResumo.class)
+    @JsonView({View.ConversaResumo.class, View.MensagemResumo.class})
     @Column(name = "conteudo")
     private String conteudo;
 
+    @JsonView({View.ConversaResumo.class, View.MensagemResumo.class})
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "chat_id", nullable = false)
     private Conversa conversa;
