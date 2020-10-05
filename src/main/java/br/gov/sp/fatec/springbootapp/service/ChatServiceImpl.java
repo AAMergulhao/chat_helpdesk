@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,7 @@ public class ChatServiceImpl implements ChatService {
     MensagemRepository mensagemRepo;
 
     @Override
+    @Transactional
     public Conversa iniciarConversa(String nomeRemetente, String nomeDestinatario, String dataHora, String conteudo) {
         Usuario remetente = usuarioRepo.findByNome(nomeRemetente);
         Usuario destinatario = usuarioRepo.findByNome(nomeDestinatario);
@@ -67,6 +70,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    @Transactional
     public Mensagem enviarMensagem(Long chatID, String nomeRemetente, String nomeDestinatario, String dataHora,
             String conteudo) {
 
