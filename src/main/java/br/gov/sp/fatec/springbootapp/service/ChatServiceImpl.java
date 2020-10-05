@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.springbootapp.entity.Conversa;
@@ -97,6 +98,23 @@ public class ChatServiceImpl implements ChatService {
         usuarioRepo.save(remetente);
 
         return mensagem;
+    }
+
+    @Override
+    @Transactional
+    @Modifying
+    public void apagarConversa(Long chatID) {
+        conversaRepo.deleteById(chatID);
+    }
+
+    @Override
+    public Set<Mensagem> buscarMensagensPorIdConversa(Long conversaID) {
+        Optional<Conversa> conversaOp = conversaRepo.findById(conversaID);
+        Conversa conversa = conversaOp.get();
+
+        Set<Mensagem> mensagens = conversa.getMensagens();
+
+        return mensagens;
     }
 
 }

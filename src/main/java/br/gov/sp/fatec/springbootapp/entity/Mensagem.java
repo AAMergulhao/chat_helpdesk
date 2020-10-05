@@ -26,6 +26,7 @@ import br.gov.sp.fatec.springbootapp.controller.View;
 @SecondaryTable(name = "usr_usuario", pkJoinColumns = @PrimaryKeyJoinColumn(name = "usr_id"))
 public class Mensagem {
 
+    @JsonView({View.MensagemResumo.class,View.ConversaResumo.class})
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mensagem_id")
@@ -39,7 +40,7 @@ public class Mensagem {
     @Column(name = "conteudo")
     private String conteudo;
 
-    @JsonView({View.ConversaResumo.class, View.MensagemResumo.class})
+    @JsonView({View.MensagemResumo.class})
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "chat_id", nullable = false)
     private Conversa conversa;
