@@ -9,6 +9,10 @@ funcione tanto na plataforma web quanto na mobile
 ## Requisitos Funcionais
 
 - Interface Flutuante
+<<<<<<< HEAD
+=======
+- Interface Interna
+>>>>>>> 21c4c623aeee4c3e9e8e690880882588dde4ad03
 - Interface interna com botões (Alunos, Colaboradores, Chats, Atividades e Configurações)
 - Criar campo de pesquisa dentro de alunos, colaboradores, chats e atividades 
 - Integração com o BD de usuários criados para alimentação dos contatos
@@ -21,12 +25,17 @@ funcione tanto na plataforma web quanto na mobile
 
 # Entregas 
 
+<<<<<<< HEAD
 ## Sprint 1 (20.09)
+=======
+## Sprint 1 
+>>>>>>> 21c4c623aeee4c3e9e8e690880882588dde4ad03
 
 - <a href = "https://pitime4.herokuapp.com">Protótipo Navegável da idealização do Projeto</a>
 - Estruturação do Banco de Dados Relacional 
 - Documentação (Escopo do Projeto, TAP, Gerenciamento de Cronograma)
 
+<<<<<<< HEAD
 ## Sprint 2 (06.10)
 
 - Mapeamento das Rotas utilizando Spring Rest
@@ -50,14 +59,19 @@ funcione tanto na plataforma web quanto na mobile
 
 - Finalização do Projeto 
 
+=======
+>>>>>>> 21c4c623aeee4c3e9e8e690880882588dde4ad03
 # Tecnologias 
 
 - Maven 
 - Java 
 - Spring Boot 
 - Spring Data 
+<<<<<<< HEAD
 - Spring Rest
 - Vue
+=======
+>>>>>>> 21c4c623aeee4c3e9e8e690880882588dde4ad03
 - MySQL 
 
 # Membros do Grupo

@@ -3,6 +3,8 @@ package br.gov.sp.fatec.springbootapp;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.util.HashSet;
 import java.util.List;
 
@@ -13,9 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
+import br.gov.sp.fatec.springbootapp.entity.Notificacao;
+import br.gov.sp.fatec.springbootapp.entity.Conversa;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
+import br.gov.sp.fatec.springbootapp.repository.NotificacaoRepository;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
+import br.gov.sp.fatec.springbootapp.repository.ConversasRepository;
 
 
 
@@ -34,10 +40,68 @@ class SpringBootAppApplicationTests {
 
     @Autowired
     private SegurancaService segService;
+
+    @Autowired
+    private NotificacaoRepository notRepo;
+
+    @Autowired
+    private ConversasRepository conversaRepo;
+
+    
     
     @Test
-	void contextLoads() {
+    void testeBuscarConversasPorIdUsuario(){
+        List<Conversa> conversas = conversaRepo.buscaConversasPorUsuario(1L);
+
+        assertFalse(conversas.isEmpty());
     }
+
+    @Test
+    void testeCriarConversa(){
+        Conversa conversa = new Conversa();
+        conversa.setStatus(0L);
+        conversa.setOrigem("painel");
+        conversa.setConteudo("String json");
+        conversa.setData(new Date(2020,11,2));
+        conversa.setInicio(new Time(21,11,2));
+        conversa.setFim(new Time(21,11,2));
+        conversa.setPartipante1Id(1L);
+        conversa.setPartipante2Id(2L);
+        conversaRepo.save(conversa);
+        assertNotNull(conversa.getId());
+    }
+
+    @Test
+    void testeBuscarConversasVistaDeChat(){
+        List<Conversa> conversas = conversaRepo.buscaConversasClienteAtivas();
+
+        assertFalse(conversas.isEmpty());
+    }
+
+    @Test
+    void testeBuscarConversasHistorico(){
+        List<Conversa> conversas = conversaRepo.buscaConversasHistorico();
+
+        assertFalse(conversas.isEmpty());
+    }
+
+    @Test
+    void testeCriarNotificacao(){
+        Notificacao notificacao = new Notificacao();
+        notificacao.setUserId(1L);
+        notificacao.setTitulo("Teste 2");
+        notificacao.setConteudo("Teste teste teste tet");
+        notificacao.setSendBy(2L);
+        notRepo.save(notificacao);
+        assertNotNull(notificacao.getId());
+    }
+    
+    @Test
+    void testeListarNotificacoesPorUsuario(){
+        List<Notificacao> notificacoes = notRepo.buscaNotificacoesPorUsuario(1L);
+        assertFalse(notificacoes.isEmpty());
+    }
+
     @Test
     void testaInsercao(){
         Usuario usuario = new  Usuario();
