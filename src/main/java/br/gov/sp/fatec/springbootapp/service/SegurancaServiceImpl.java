@@ -81,6 +81,13 @@ public class SegurancaServiceImpl implements SegurancaService{
         return autorizacao;
     }
 
+    @Override
+    public Usuario buscarUsuarioPorNomeESenha(String nome, String senha) {
+        Usuario usuario = usuarioRepo.buscaUsuaioPorNomeESenha(nome, senha);
+        
+        return usuario;
+    }
+
 
     
 }

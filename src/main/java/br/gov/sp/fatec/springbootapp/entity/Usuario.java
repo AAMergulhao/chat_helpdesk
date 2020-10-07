@@ -33,7 +33,7 @@ public class Usuario implements Serializable{
     @Column(name = "usr_id")
     private Long id;
     
-    @JsonView({View.UsuarioResumo.class, View.AutorizacaoResumo.class, View.ConversaResumo.class})
+    @JsonView({View.UsuarioResumo.class, View.AutorizacaoResumo.class, View.ConversaResumo.class,View.MensagemResumo.class})
     @Column(name = "usr_nome")
     private String nome;
 
@@ -51,7 +51,7 @@ public class Usuario implements Serializable{
         )
     private Set<Autorizacao> autorizacoes;
     
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "usuarios_conversas",
         joinColumns = {@JoinColumn(name = "usr_id")},
         inverseJoinColumns = {@JoinColumn(name = "chat_id")}
@@ -64,6 +64,7 @@ public class Usuario implements Serializable{
         inverseJoinColumns = {@JoinColumn(name = "mensagem_id")}
         )
     private Set<Mensagem> mensagens;
+
 
     @OneToOne(mappedBy="destinatario")
     private Mensagem mensagem;

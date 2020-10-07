@@ -15,6 +15,8 @@ public interface SegurancaService{
 
     public Usuario buscarUsuarioPorNome(String nome);
 
+    public Usuario buscarUsuarioPorNomeESenha(String nome, String senha);
+
     public Autorizacao buscarAutorizacaoPorNome(String nome);
     
 }

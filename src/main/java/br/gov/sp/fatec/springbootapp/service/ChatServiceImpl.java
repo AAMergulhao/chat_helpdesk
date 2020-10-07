@@ -75,29 +75,36 @@ public class ChatServiceImpl implements ChatService {
     public Mensagem enviarMensagem(Long chatID, String nomeRemetente, String nomeDestinatario, String dataHora,
             String conteudo) {
 
-        Usuario remetente = usuarioRepo.findByNome(nomeRemetente);
-        Usuario destinatario = usuarioRepo.findByNome(nomeDestinatario);
-
         Optional<Conversa> conversaOp = conversaRepo.findById(chatID);
-        Conversa conversa = conversaOp.get();
 
-        Mensagem mensagem = new Mensagem();
-        mensagem.setConteudo(conteudo);
-        mensagem.setDataHora(dataHora);
-        mensagem.setConversa(conversa);
-        mensagem.setUsuarios(new HashSet<Usuario>());
-        mensagem.getUsuarios().add(remetente);
-        mensagem.setDestinatario(destinatario);
-        mensagemRepo.save(mensagem);
-        
-        conversa.setMensagens(new HashSet<Mensagem>());
-        conversa.getMensagens().add(mensagem);
-        conversaRepo.save(conversa);
-        remetente.setMensagens(new HashSet<Mensagem>());
-        remetente.getMensagens().add(mensagem);
-        usuarioRepo.save(remetente);
+        if (conversaOp.isPresent()) {
+            Usuario remetente = usuarioRepo.findByNome(nomeRemetente);
+            Usuario destinatario = usuarioRepo.findByNome(nomeDestinatario);
 
-        return mensagem;
+            Conversa conversa = conversaOp.get();
+
+            Mensagem mensagem = new Mensagem();
+            mensagem.setConteudo(conteudo);
+            mensagem.setDataHora(dataHora);
+            mensagem.setConversa(conversa);
+            mensagem.setUsuarios(new HashSet<Usuario>());
+            mensagem.getUsuarios().add(remetente);
+            mensagem.setDestinatario(destinatario);
+            mensagemRepo.save(mensagem);
+
+            conversa.setMensagens(new HashSet<Mensagem>());
+            conversa.getMensagens().add(mensagem);
+            conversaRepo.save(conversa);
+            remetente.setMensagens(new HashSet<Mensagem>());
+            remetente.getMensagens().add(mensagem);
+            usuarioRepo.save(remetente);
+
+            return mensagem;
+        }
+       Conversa conversa =  iniciarConversa(nomeRemetente, nomeDestinatario, dataHora, conteudo);
+       Mensagem mensagem = conversa.getMensagens().iterator().next();
+
+       return mensagem;
     }
 
     @Override

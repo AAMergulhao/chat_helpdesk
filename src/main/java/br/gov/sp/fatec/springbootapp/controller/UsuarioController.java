@@ -51,6 +51,12 @@ public class UsuarioController {
     }
 
     @JsonView(View.UsuarioResumo.class)
+    @GetMapping(value = "/login")
+    public Usuario buscarPorNomeESenha(@RequestParam("nome") String nome,@RequestParam("senha") String senha){
+        return segService.buscarUsuarioPorNomeESenha(nome, senha);
+    }
+
+    @JsonView(View.UsuarioResumo.class)
     @PostMapping
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario, UriComponentsBuilder uriComponentsBuilder){
         usuario = segService.criarUsuario(usuario.getNome(),usuario.getSenha(), "ROLE_USUARIO");

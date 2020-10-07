@@ -48,6 +48,7 @@ public class Mensagem {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "mensagens")
     private Set<Usuario> usuarios;
 
+    @JsonView(View.MensagemResumo.class)
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "destinatario")
     private Usuario destinatario;
