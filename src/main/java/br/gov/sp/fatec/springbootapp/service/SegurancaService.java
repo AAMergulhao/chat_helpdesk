@@ -19,4 +19,5 @@ public interface SegurancaService{
 
     public Autorizacao buscarAutorizacaoPorNome(String nome);
     
+    public Usuario alterarSenha(String senha, Long id);
 }

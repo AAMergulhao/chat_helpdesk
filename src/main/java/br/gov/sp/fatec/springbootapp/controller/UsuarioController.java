@@ -99,7 +99,7 @@ public class UsuarioController {
     @PutMapping(value = "/buscarNotificacoesRecebidas")
     public ResponseEntity<Set<Notificacao>> buscarNotificacoesRecebidas(@RequestParam("nome") String nome, UriComponentsBuilder uriComponentsBuilder){
         Usuario usuario = segService.buscarUsuarioPorNome(nome);
-        
+
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(
             uriComponentsBuilder.path(
@@ -107,5 +107,18 @@ public class UsuarioController {
         Set<Notificacao> notificacoes = usuario.getNotificacoesRecebidas();
         return  new ResponseEntity<Set<Notificacao>>(notificacoes, responseHeaders, HttpStatus.CREATED);
         
+    }
+
+    @JsonView(View.UsuarioResumo.class)
+    @PutMapping
+    public ResponseEntity<Usuario> alterarSenha(@RequestBody Usuario usuario, UriComponentsBuilder uriComponentsBuilder){
+        usuario = segService.alterarSenha(usuario.getSenha(), usuario.getId());
+        
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(
+            uriComponentsBuilder.path(
+                "/usuario/"+ usuario.getId()).build().toUri());
+
+        return new ResponseEntity<Usuario>(usuario, responseHeaders, HttpStatus.CREATED);
     }
 }

@@ -73,6 +73,7 @@ public class SegurancaServiceImpl implements SegurancaService{
     }
 
     @Override
+    @Transactional
     public Autorizacao buscarAutorizacaoPorNome(String nome) {
         Autorizacao autorizacao = autRepo.findByNome(nome);
         if(autorizacao == null){
@@ -86,6 +87,22 @@ public class SegurancaServiceImpl implements SegurancaService{
         Usuario usuario = usuarioRepo.buscaUsuaioPorNomeESenha(nome, senha);
         
         return usuario;
+    }
+
+    @Override
+    @Transactional
+    public Usuario alterarSenha(String senha, Long id) {
+        Optional<Usuario> usuarioOp = usuarioRepo.findById(id);
+
+        if(usuarioOp.isPresent()){
+            Usuario usuario = usuarioOp.get();
+
+            usuario.setSenha(senha);
+            usuarioRepo.save(usuario);
+            return usuario;
+        
+        }
+        throw new RegistroNaoEncontradoException("Usuario não encontrado");
     }
 
 
