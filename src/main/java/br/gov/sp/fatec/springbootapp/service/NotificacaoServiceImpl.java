@@ -1,6 +1,7 @@
 package br.gov.sp.fatec.springbootapp.service;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -31,38 +32,44 @@ public class NotificacaoServiceImpl implements NotificacaoService {
         Notificacao notificacao = new Notificacao();
         notificacao.setTitulo(titulo);
         notificacao.setConteudo(conteudo);
-        notificacao.setSendBy(usuarioRemetente.getId());
-        notificacao.setUsuario(usuarioDestinatario);
+        notificacao.setNotRemetente(usuarioRemetente);
+        notificacao.setNotDestinatario(usuarioDestinatario);
         notRepo.save(notificacao);
         return notificacao;
     }
 
+    @Override
     @Transactional
-    public LinkedList<Notificacao> criarNotificacaoDupla(String nomeDestinatario1,String nomeDestinatario2, String nomeRemetente, String titulo, String conteudo) {
-        LinkedList<Notificacao> notificacoes = new LinkedList<Notificacao>();
+    public void deletarNotificacao(Long notID) {
+        notRepo.deleteById(notID);
+    }
 
-        Usuario usuarioDestinatario1 = usuarioRepo.buscaUsuarioPorNome(nomeDestinatario1);
-        Usuario usuarioDestinatario2 = usuarioRepo.buscaUsuarioPorNome(nomeDestinatario1);
-        Usuario usuarioRemetente = usuarioRepo.buscaUsuarioPorNome(nomeRemetente);
+    // @Transactional
+    // public LinkedList<Notificacao> criarNotificacaoDupla(String nomeDestinatario1,String nomeDestinatario2, String nomeRemetente, String titulo, String conteudo) {
+    //     LinkedList<Notificacao> notificacoes = new LinkedList<Notificacao>();
+
+    //     Usuario usuarioDestinatario1 = usuarioRepo.buscaUsuarioPorNome(nomeDestinatario1);
+    //     Usuario usuarioDestinatario2 = usuarioRepo.buscaUsuarioPorNome(nomeDestinatario1);
+    //     Usuario usuarioRemetente = usuarioRepo.buscaUsuarioPorNome(nomeRemetente);
 
     
-        Notificacao notificacao1 = new Notificacao();
-        notificacao1.setTitulo(titulo);
-        notificacao1.setConteudo(conteudo);
-        notificacao1.setSendBy(usuarioRemetente.getId());
-        notificacao1.setUsuario(usuarioDestinatario1);
-        notRepo.save(notificacao1);
-        notificacoes.push(notificacao1);
+    //     Notificacao notificacao1 = new Notificacao();
+    //     notificacao1.setTitulo(titulo);
+    //     notificacao1.setConteudo(conteudo);
+    //     notificacao1.setSendBy(usuarioRemetente.getId());
+    //     notificacao1.setUsuario(usuarioDestinatario1);
+    //     notRepo.save(notificacao1);
+    //     notificacoes.push(notificacao1);
 
-        Notificacao notificacao2 = new Notificacao();
-        notificacao2.setTitulo(titulo);
-        notificacao2.setConteudo(conteudo);
-        notificacao2.setSendBy(usuarioRemetente.getId());
-        notificacao2.setUsuario(usuarioDestinatario2);
-        notRepo.save(notificacao2);
-        notificacoes.push(notificacao2);
+    //     Notificacao notificacao2 = new Notificacao();
+    //     notificacao2.setTitulo(titulo);
+    //     notificacao2.setConteudo(conteudo);
+    //     notificacao2.setSendBy(usuarioRemetente.getId());
+    //     notificacao2.setUsuario(usuarioDestinatario2);
+    //     notRepo.save(notificacao2);
+    //     notificacoes.push(notificacao2);
 
-        return notificacoes;
-    }
+    //     return notificacoes;
+    // }
     
 }

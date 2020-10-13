@@ -23,17 +23,18 @@ import br.gov.sp.fatec.springbootapp.controller.View;
 
 import java.io.Serializable;
 
-
 @Entity
 @Table(name = "usr_usuario")
-public class Usuario implements Serializable{
+public class Usuario implements Serializable {
 
+    @JsonView(View.NotificacaoResumo.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usr_id")
     private Long id;
-    
-    @JsonView({View.UsuarioResumo.class, View.AutorizacaoResumo.class, View.ConversaResumo.class,View.MensagemResumo.class})
+
+    @JsonView({ View.UsuarioResumo.class, View.AutorizacaoResumo.class, View.ConversaResumo.class,
+            View.MensagemResumo.class })
     @Column(name = "usr_nome")
     private String nome;
 
@@ -45,73 +46,70 @@ public class Usuario implements Serializable{
 
     @JsonView(View.UsuarioResumo.class)
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "uau_usuario_autorizacao",
-        joinColumns = {@JoinColumn(name = "usr_id")},
-        inverseJoinColumns = {@JoinColumn(name = "aut_id")}
-        )
+    @JoinTable(name = "uau_usuario_autorizacao", joinColumns = { @JoinColumn(name = "usr_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "aut_id") })
     private Set<Autorizacao> autorizacoes;
-    
+
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "usuarios_conversas",
-        joinColumns = {@JoinColumn(name = "usr_id")},
-        inverseJoinColumns = {@JoinColumn(name = "chat_id")}
-        )
+    @JoinTable(name = "usuarios_conversas", joinColumns = { @JoinColumn(name = "usr_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "chat_id") })
     private Set<Conversa> conversas;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuarios_mensagens",
-        joinColumns = {@JoinColumn(name = "usr_id")},
-        inverseJoinColumns = {@JoinColumn(name = "mensagem_id")}
-        )
+    @JoinTable(name = "usuarios_mensagens", joinColumns = { @JoinColumn(name = "usr_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "mensagem_id") })
     private Set<Mensagem> mensagens;
 
-
-    @OneToOne(mappedBy="destinatario")
+    @OneToOne(mappedBy = "destinatario")
     private Mensagem mensagem;
     
-    @OneToMany(mappedBy="usuario", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private Set<Notificacao> notificacoes;
+    @JsonView(View.NotificacaoResumo.class)
+    @OneToMany(mappedBy = "notRemetente",fetch = FetchType.LAZY)
+    private Set<Notificacao> notificacoesEnviadas;
 
-    public Long getId(){
-        return  this.id;
+    @OneToMany(mappedBy = "notRemetente", fetch = FetchType.LAZY)
+    private Set<Notificacao> notificacoesRecebidas;
+
+    public Long getId() {
+        return this.id;
     }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public String getNome(){
-        return  this.nome;
+
+    public String getNome() {
+        return this.nome;
     }
-    public void setNome(String nome){
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public String getAvatar(){
-        return  this.avatar;
+    public String getAvatar() {
+        return this.avatar;
     }
-    public void setAvatar(String avatar){
+
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    public String getSenha(){
-        return  this.senha;
+
+    public String getSenha() {
+        return this.senha;
     }
-    public void setSenha(String senha){
+
+    public void setSenha(String senha) {
         this.senha = senha;
     }
-    public Set<Autorizacao> getAutorizacoes(){
-        return  this.autorizacoes;
+
+    public Set<Autorizacao> getAutorizacoes() {
+        return this.autorizacoes;
     }
-    public void setAutorizacoes(Set<Autorizacao> autorizacoes){
+
+    public void setAutorizacoes(Set<Autorizacao> autorizacoes) {
         this.autorizacoes = autorizacoes;
     }
 
-    public Set<Notificacao> getNotificacoes(){
-        return  this.notificacoes;
-    }
-
-    public void setNotificacoes(Set<Notificacao> notificacoes){
-        this.notificacoes = notificacoes;
-    }
 
     public Set<Conversa> getConversas() {
         return conversas;
@@ -128,5 +126,29 @@ public class Usuario implements Serializable{
     public void setMensagens(Set<Mensagem> mensagens) {
         this.mensagens = mensagens;
     }
-    
+
+    public Mensagem getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(Mensagem mensagem) {
+        this.mensagem = mensagem;
+    }
+
+    public Set<Notificacao> getNotificacoesEnviadas() {
+        return notificacoesEnviadas;
+    }
+
+    public void setNotificacoesEnviadas(Set<Notificacao> notificacoesEnviadas) {
+        this.notificacoesEnviadas = notificacoesEnviadas;
+    }
+
+    public Set<Notificacao> getNotificacoesRecebidas() {
+        return notificacoesRecebidas;
+    }
+
+    public void setNotificacoesRecebidas(Set<Notificacao> notificacoesRecebidas) {
+        this.notificacoesRecebidas = notificacoesRecebidas;
+    }
+
 }

@@ -9,4 +9,6 @@ public class View {
     public static class ConversaResumo {}
 
     public static class MensagemResumo {}
+
+    public static class NotificacaoResumo {}
 }

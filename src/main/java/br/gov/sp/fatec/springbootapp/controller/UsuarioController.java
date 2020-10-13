@@ -1,6 +1,7 @@
 package br.gov.sp.fatec.springbootapp.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
+import br.gov.sp.fatec.springbootapp.entity.Notificacao;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
+import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 
 // import br.gov.sp.fatec.springbootapp.controller.View;
@@ -31,6 +34,9 @@ public class UsuarioController {
 
     @Autowired
     private SegurancaService segService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepo;
 
     @JsonView(View.UsuarioResumo.class)
     @GetMapping(value = "/todos")
@@ -74,4 +80,12 @@ public class UsuarioController {
         return segService.buscarAutorizacaoPorNome(autorizacao);
     }
     
+    @JsonView(View.NotificacaoResumo.class)
+    @GetMapping(value = "/buscarNotificacoesEnviadas")
+    public Set<Notificacao> buscarNotificacoesEnviadas(@RequestParam("nome") String nome){
+        Usuario usuario = usuarioRepo.buscaUsuarioPorNome(nome);
+
+        return  usuario.getNotificacoesEnviadas();
+        
+    }
 }

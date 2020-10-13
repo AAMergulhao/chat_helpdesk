@@ -6,33 +6,48 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import br.gov.sp.fatec.springbootapp.controller.View;
+
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "usr_notificacoes")
 public class Notificacao implements Serializable{
 
+    @JsonView(View.NotificacaoResumo.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "not_id")
     private Long id;
 
+    @JsonView(View.NotificacaoResumo.class)
     @Column(name = "not_titulo")
     private String titulo;
 
+    @JsonView(View.NotificacaoResumo.class)
     @Column(name = "not_conteudo")
     private String conteudo;
 
-    @Column(name = "not_send_by")
-    private Long send_by;
+    // @ManyToMany(fetch = FetchType.LAZY, mappedBy = "notificacoes")
+    // private Set<Usuario> usuarios;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "usr_id", nullable = false)
-    private Usuario usuario; 
+    @ManyToOne
+    @JoinColumn(name = "not_remetente_id")
+    private Usuario notRemetente;
 
+    @ManyToOne
+    @JoinColumn(name = "not_destinatario_id")
+    private Usuario notDestinatario;
 
     public Long getId() {
         return this.id;
@@ -58,22 +73,22 @@ public class Notificacao implements Serializable{
         this.conteudo = conteudo;
     }
 
-    public Long getSendBy() {
-        return this.send_by;
+    public Usuario getNotRemetente() {
+        return notRemetente;
     }
 
-    public void setSendBy(Long send_by) {
-        this.send_by = send_by;
+    public void setNotRemetente(Usuario notRemetente) {
+        this.notRemetente = notRemetente;
     }
 
-    
-    public Usuario getUsuario() {
-        return this.usuario;
+    public Usuario getNotDestinatario() {
+        return notDestinatario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setNotDestinatario(Usuario notDestinatario) {
+        this.notDestinatario = notDestinatario;
     }
+
 
 
 }

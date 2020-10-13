@@ -32,12 +32,13 @@ create table uau_usuario_autorizacao (
 
 create table usr_notificacoes (
   not_id bigint unsigned not null auto_increment,
-  usr_id bigint unsigned not null,
+  not_remetente_id bigint unsigned not null,
+  not_destinatario_id bigint unsigned not null,
   not_titulo varchar(20) not null,
   not_conteudo varchar(255) not null,
-  not_send_by bigint not null,
   primary key (not_id),
-  foreign key usr_id_fk (usr_id) references usr_usuario (usr_id) on delete restrict on update cascade
+  foreign key (not_remetente_id) references usr_usuario (usr_id) on delete restrict on update cascade,
+  foreign key (not_destinatario_id) references usr_usuario (usr_id) on delete restrict on update cascade
 );
 
 

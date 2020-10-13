@@ -52,30 +52,11 @@ class SpringBootAppApplicationTests {
     //Serviço que cria notificações
     @Test
     void testeCriarNotificacao(){
-        Notificacao notificacao = notService.criarNotificacao("Fabiola","Arthur","Teste", "teste conteudo");
+        Notificacao notificacao = notService.criarNotificacao("Fabiola","Arthur","Teste", "teste conteudo 2");
         assertNotNull(notificacao.getId());
     }
 
-    //Transação com duas inserções no banco de dados
-    @Test
-    void testeCriarNotificacaoDupla(){
-        LinkedList<Notificacao> notificacoes= notService.criarNotificacaoDupla("Fabiola","Arthur","Arthur","Teste", "teste conteudo");
-        assertNotNull(notificacoes.isEmpty());
-    }
     
-    //Consulto com dois parametros Id do remetente e titulo da notificacao
-    @Test
-    void BuscarNotificacaoPorTituloRemetente(){
-        List<Notificacao> notificacao = notRepo.findByTituloERemetente("Teste 2", 2L);
-        assertFalse(notificacao.isEmpty());
-    }
-
-    //Consulta com join
-    @Test 
-    void testeBuscaNotificacoesPorIdUsuario(){
-        List<Notificacao> notificacoes = notRepo.buscaPorNomeUsuario(1L);
-        assertFalse(notificacoes.isEmpty());
-    }
 
     @Test
     void testaInsercao(){
