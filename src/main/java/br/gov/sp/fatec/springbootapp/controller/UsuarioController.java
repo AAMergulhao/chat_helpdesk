@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -82,10 +83,29 @@ public class UsuarioController {
     
     @JsonView(View.NotificacaoResumo.class)
     @GetMapping(value = "/buscarNotificacoesEnviadas")
-    public Set<Notificacao> buscarNotificacoesEnviadas(@RequestParam("nome") String nome){
-        Usuario usuario = usuarioRepo.buscaUsuarioPorNome(nome);
+    public ResponseEntity<Set<Notificacao>> buscarNotificacoesEnviadas(@RequestParam("nome") String nome, UriComponentsBuilder uriComponentsBuilder){
+        Usuario usuario = segService.buscarUsuarioPorNome(nome);
 
-        return  usuario.getNotificacoesEnviadas();
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(
+            uriComponentsBuilder.path(
+                "/usuario/buscarNotificacoesEnviadas/"+ usuario.getId()).build().toUri());
+        Set<Notificacao> notificacoes = usuario.getNotificacoesEnviadas();
+        return  new ResponseEntity<Set<Notificacao>>(notificacoes, responseHeaders, HttpStatus.CREATED);
+        
+    }
+
+    @JsonView(View.NotificacaoResumo.class)
+    @PutMapping(value = "/buscarNotificacoesRecebidas")
+    public ResponseEntity<Set<Notificacao>> buscarNotificacoesRecebidas(@RequestParam("nome") String nome, UriComponentsBuilder uriComponentsBuilder){
+        Usuario usuario = segService.buscarUsuarioPorNome(nome);
+        
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(
+            uriComponentsBuilder.path(
+                "/usuario/buscarNotificacoesEnviadas/"+ usuario.getId()).build().toUri());
+        Set<Notificacao> notificacoes = usuario.getNotificacoesRecebidas();
+        return  new ResponseEntity<Set<Notificacao>>(notificacoes, responseHeaders, HttpStatus.CREATED);
         
     }
 }
