@@ -27,14 +27,14 @@ funcione tanto na plataforma web quanto na mobile
 - Estruturação do Banco de Dados Relacional 
 - Documentação (Escopo do Projeto, TAP, Gerenciamento de Cronograma)
 
-## Sprint 2 (06.10)
+## Sprint 2 (04.10)
 
 - Mapeamento das Rotas utilizando Spring Rest
 - Widget 
 - Correções mediante aos feedbacks
 - Documentação (Gerenciamento Finaceiro, Qualidade e BSC)
 
-## Sprint 3 (18/11)
+## Sprint 3 (18/10)
 
 - Implementação da Segurança 
 
