@@ -27,7 +27,7 @@ import java.io.Serializable;
 @Table(name = "usr_usuario")
 public class Usuario implements Serializable {
 
-    @JsonView(View.NotificacaoResumo.class)
+    @JsonView({View.NotificacaoResumo.class, View.UsuarioResumo.class})
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usr_id")
