@@ -2,7 +2,7 @@
   <div class="row">
     <div class="">
       <div class="col s12">
-        <div class="card blue-grey darken-1" :class="classe">
+        <div class="card blue-grey darken-1 pop">
           <div class="card-content white-text">
             <span class="card-title" style="padding-block: 5px"
               ><i class="material-icons">notifications</i> Atividades</span
@@ -10,7 +10,7 @@
             <div class="row">
               <div class="scrolable">
                 <div
-                  class="col s12 m6 l6"
+                  class="col s12 m6 l6 pop"
                   :class="classe"
                   v-for="(atividade, key) in atividades"
                   v-bind:key="atividade.id"
@@ -58,7 +58,6 @@ if (sessionStorage.usuario) {
   usuario = JSON.parse(sessionStorage.usuario);
 }
 
-let classe = "pop";
 let atividades = {};
 
 async function getAtividades() {
@@ -96,7 +95,6 @@ export default {
   data() {
     return {
       atividades,
-      classe,
     };
   },
   props: {
