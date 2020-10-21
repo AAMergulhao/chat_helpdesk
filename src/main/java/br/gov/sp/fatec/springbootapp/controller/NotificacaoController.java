@@ -44,8 +44,12 @@ public class NotificacaoController {
 
     @DeleteMapping
     public void apagarMensagem(@RequestBody Notificacao notificacao) {
-
         notService.deletarNotificacao(notificacao.getId());
 
+    }
+
+    @PostMapping(value = "/deletar")
+    public void deletarNotificacao(@RequestBody Notificacao notificacao) {
+        notService.deletarNotificacao(notificacao.getId());
     }
 }

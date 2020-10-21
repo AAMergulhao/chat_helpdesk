@@ -81,13 +81,13 @@
               >
             </li>
             <li>
-              <a href="/"><i class="material-icons">exit_to_app</i></a>
+              <a v-on:click="logout()"><i class="material-icons">exit_to_app</i></a>
             </li>
           </ul>
         </div>
       </nav>
 
-      <div v-if="location == '?url=notifications'">
+      <div v-if="location == '?url=notifications' || location == ''">
           <Notifications v-bind:usuario="usuario" />
       </div>
     </div>
@@ -105,7 +105,7 @@
           >
         </li>
         <li>
-          <a class="btn-floating red" href="/ "
+          <a class="btn-floating red" v-on:click="logout()"
             ><i class="material-icons">exit_to_app</i></a
           >
         </li>
@@ -124,10 +124,18 @@ if (sessionStorage.usuario) {
 let location = window.location.search;
 import Notifications from "./Notifications.vue";
 
+function logout(){
+  sessionStorage.removeItem('usuario');
+  window.location.reload();
+}
+
 export default {
   name: "Panel",
   components: {
     Notifications,
+  },
+  methods: {
+    logout,
   },
   data() {
     return {

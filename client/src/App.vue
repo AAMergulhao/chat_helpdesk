@@ -3,8 +3,13 @@
 </template>
 
 <script>
+import M from 'materialize-css'
+
 export default {
-  name: 'App'
+  name: 'App',
+  mounted(){
+      M.AutoInit()
+  }
 }
 </script>
 
@@ -19,12 +24,25 @@ body {
         transform: scale(0);
     }
     100% {
-        transoform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes showOff {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
     }
 }
 
 .pop {
     animation: showUp 0.5s cubic-bezier(0.18, 1.3, 1, 1) forwards;
+}
+
+.popOut {
+    animation: showOff 0.5s cubic-bezier(0.18, 1.3, 1, 1) backwards;
 }
 
 .side-nav li.active {

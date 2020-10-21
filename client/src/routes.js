@@ -12,7 +12,11 @@ const routes = [
         path: '/panel',
         name: 'Panel',
         component:Panel
+    },
+    {
+        path: '/', redirect: { path: '/panel?url=notifications' }
     }
+    
 ];
 
 const router = createRouter({
@@ -23,7 +27,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.name !== 'Login' && !sessionStorage.usuario){ next({ path: '/login' })}
 
-    else if (to.name == 'Login' && sessionStorage.usuario){ next({ path: '/teste' })}
+    else if (to.name == 'Login' && sessionStorage.usuario){ next({ path: '/panel?url=notifications' })}
     
     else next();
   })
