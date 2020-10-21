@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,7 +41,7 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepo;
 
     @JsonView(View.UsuarioResumo.class)
-    @GetMapping(value = "/todos")
+    @GetMapping
     public List<Usuario> buscarTodos(){
         return segService.buscarTodosUsuarios();
     }
@@ -64,6 +65,7 @@ public class UsuarioController {
     }
 
     @JsonView(View.UsuarioResumo.class)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario, UriComponentsBuilder uriComponentsBuilder){
         usuario = segService.criarUsuario(usuario.getNome(),usuario.getSenha(), "ROLE_USUARIO");
