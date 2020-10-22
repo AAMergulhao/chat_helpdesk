@@ -1,6 +1,7 @@
 package br.gov.sp.fatec.springbootapp.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,5 +28,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     //Consulto com join
     @Query("select u from Usuario u inner join u.autorizacoes a where a.nome = ?1")
     public List<Usuario> buscaPorNomeAutorizacao(String usuario);
+
+    @Query("select u from Usuario u")
+    public Set<Usuario> buscarUsuarios();
 
 }

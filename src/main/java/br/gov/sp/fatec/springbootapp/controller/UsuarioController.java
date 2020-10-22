@@ -65,6 +65,12 @@ public class UsuarioController {
     }
 
     @JsonView(View.UsuarioResumo.class)
+    @GetMapping(value = "/fetchAll")
+    public Set<Usuario> buscarUsuario(){
+        return usuarioRepo.buscarUsuarios();
+    }
+
+    @JsonView(View.UsuarioResumo.class)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario, UriComponentsBuilder uriComponentsBuilder){

@@ -11,7 +11,7 @@
               <div class="scrolable">
                 <div
                   class="col s12 m6 l6 pop"
-                  :class="classe"
+                  style="cursor: pointer"
                   v-for="(atividade, key) in atividades"
                   v-bind:key="atividade.id"
                   v-bind:id="key"
@@ -23,7 +23,11 @@
                       ><i class="material-icons">close</i></a
                     >
                   </div>
-                  <div class="card-panel grey lighten-5 z-depth-1 hoverable">
+                  <div
+                    class="card-panel grey lighten-5 z-depth-1 hoverable modal-trigger"
+                    href="#modal_atividade"
+                    v-on:click="setModalContent(atividade, key)"
+                  >
                     <div class="row valign-wrapper">
                       <div class="col s2">
                         <img
@@ -48,18 +52,52 @@
         </div>
       </div>
     </div>
+
+    <div id="modal_atividade" class="modal" style="width: 400px">
+      <div class="modal-content center-align">
+        <h4>{{ atividadeSelectedTitulo }}</h4>
+        <p>{{ atividadeSelectedTituloConteudo }}</p>
+        <div class="modal-footer" style="width: 270px">
+          <a
+            class="modal-close green btn center-align"
+            v-on:click="
+              deleteAtividade(atividadeSelectedID, atividadeSelectedElementID)
+            "
+            >Concluir Atividade
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import M from "materialize-css";
 let usuario;
 if (sessionStorage.usuario) {
   usuario = JSON.parse(sessionStorage.usuario);
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  var elems = document.querySelectorAll(".modal");
+  var instances = M.Modal.init(elems);
+});
+
 let atividades = {};
 
+let atividadeSelectedElementID;
+let atividadeSelectedID;
+let atividadeSelectedTitulo;
+let atividadeSelectedTituloConteudo;
+
+function setModalContent(atividade, key) {
+  this.atividadeSelectedElementID = key;
+  this.atividadeSelectedID = atividade.id;
+  this.atividadeSelectedTitulo = atividade.titulo;
+  this.atividadeSelectedTituloConteudo = atividade.conteudo;
+  return;
+}
 async function getAtividades() {
   atividades = await axios.get(
     `http://localhost:8081/spring-app/usuario/buscarNotificacoesEnviadas?nome=${usuario.nome}`,
@@ -75,7 +113,6 @@ async function getAtividades() {
 
 async function deleteAtividade(id, key) {
   console.log(id);
-  let config;
   await axios
     .post(
       "http://localhost:8081/spring-app/not/deletar",
@@ -83,9 +120,10 @@ async function deleteAtividade(id, key) {
       { headers: { "Access-Control-Allow-Origin": "*" } }
     )
     .then(() => {
-      setTimeout(() => {this.atividades.splice(key, 1)}, 500);
-      document.getElementById(key).classList.add("popOut")
-      
+      document.getElementById(key).classList.add("popOut");
+      setTimeout(() => {
+        this.atividades.splice(key, 1);
+      }, 500);
     });
 
   return;
@@ -95,6 +133,10 @@ export default {
   data() {
     return {
       atividades,
+      atividadeSelectedElementID,
+      atividadeSelectedID,
+      atividadeSelectedTitulo,
+      atividadeSelectedTituloConteudo,
     };
   },
   props: {
@@ -103,6 +145,7 @@ export default {
   methods: {
     getAtividades,
     deleteAtividade,
+    setModalContent,
   },
   beforeMount: async function () {
     this.atividades = await this.getAtividades();

@@ -90,6 +90,10 @@
       <div v-if="location == '?url=notifications' || location == ''">
           <Notifications v-bind:usuario="usuario" />
       </div>
+
+      <div v-if="location == '?url=employes' || location == ''">
+          <Employes v-bind:usuario="usuario" />
+      </div>
     </div>
 
     <div class="fixed-action-btn hide-on-large-only pop">
@@ -115,7 +119,7 @@
 </template>
 
 
-<script>
+'<script>
 let usuario
 if (sessionStorage.usuario) {
   usuario = JSON.parse(sessionStorage.usuario);
@@ -123,6 +127,7 @@ if (sessionStorage.usuario) {
 
 let location = window.location.search;
 import Notifications from "./Notifications.vue";
+import Employes from "./Employes.vue";
 
 function logout(){
   sessionStorage.removeItem('usuario');
@@ -133,6 +138,7 @@ export default {
   name: "Panel",
   components: {
     Notifications,
+    Employes
   },
   methods: {
     logout,
@@ -144,7 +150,7 @@ export default {
     };
   },
 };
-</script>
+</script>'
 
 <style>
 body {
