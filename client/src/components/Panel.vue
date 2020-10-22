@@ -91,7 +91,7 @@
           <Notifications v-bind:usuario="usuario" />
       </div>
 
-      <div v-if="location == '?url=employes' || location == ''">
+      <div v-if="location == '?url=employes'">
           <Employes v-bind:usuario="usuario" />
       </div>
     </div>
