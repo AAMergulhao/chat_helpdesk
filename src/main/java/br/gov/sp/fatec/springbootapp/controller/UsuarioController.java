@@ -37,9 +37,6 @@ public class UsuarioController {
     @Autowired
     private SegurancaService segService;
 
-    @Autowired
-    private UsuarioRepository usuarioRepo;
-
     @JsonView(View.UsuarioResumo.class)
     @GetMapping
     public List<Usuario> buscarTodos(){
@@ -61,17 +58,13 @@ public class UsuarioController {
     @JsonView(View.UsuarioResumo.class)
     @GetMapping(value = "/login")
     public Usuario buscarPorNomeESenha(@RequestParam("nome") String nome,@RequestParam("senha") String senha){
+        if(nome == "" || nome == null){
+            System.out.println("NOME "+ nome);
+        }
         return segService.buscarUsuarioPorNomeESenha(nome, senha);
     }
 
     @JsonView(View.UsuarioResumo.class)
-    @GetMapping(value = "/fetchAll")
-    public Set<Usuario> buscarUsuario(){
-        return usuarioRepo.buscarUsuarios();
-    }
-
-    @JsonView(View.UsuarioResumo.class)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario, UriComponentsBuilder uriComponentsBuilder){
         usuario = segService.criarUsuario(usuario.getNome(),usuario.getSenha(), "ROLE_USUARIO");

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +45,6 @@ public class SegurancaServiceImpl implements SegurancaService{
     }
 
     @Override
-    @PreAuthorize("isAuthenticated()")
     public List<Usuario> buscarTodosUsuarios(){
         return usuarioRepo.findAll();
     }

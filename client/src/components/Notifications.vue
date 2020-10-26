@@ -53,11 +53,11 @@
       </div>
     </div>
 
-    <div id="modal_atividade" class="modal" style="width: 400px">
+    <div id="modal_atividade" class="modal" style="width: 300px">
       <div class="modal-content center-align">
         <h4>{{ atividadeSelectedTitulo }}</h4>
         <p>{{ atividadeSelectedTituloConteudo }}</p>
-        <div class="modal-footer" style="width: 270px">
+        <div class="modal-footer center-align">
           <a
             class="modal-close green btn center-align"
             v-on:click="

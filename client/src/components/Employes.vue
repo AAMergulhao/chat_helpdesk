@@ -164,7 +164,7 @@ if (sessionStorage.usuario) {
 let usuarios;
 async function getUsuarios() {
   usuarios = await axios.get(
-    `http://localhost:8081/spring-app/usuario/fetchAll`,
+    `http://localhost:8081/spring-app/usuario/`,
     {
       headers: {
         "Access-Control-Allow-Origin": "*",
