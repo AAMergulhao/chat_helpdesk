@@ -1,19 +1,17 @@
 package br.gov.sp.fatec.springbootapp.service;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.entity.Notificacao;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.repository.NotificacaoRepository;
-
 
 @Service("NotificacaoService")
 public class NotificacaoServiceImpl implements NotificacaoService {
@@ -24,16 +22,27 @@ public class NotificacaoServiceImpl implements NotificacaoService {
     private NotificacaoRepository notRepo;
 
     @Transactional
-    public Notificacao criarNotificacao(String nomeDestinatario, String nomeRemetente, String titulo, String conteudo) {
+    public Notificacao criarNotificacao(String nomeDestinatario, String nomeRemetente, String titulo, String conteudo,
+            String dataDisparo, String dataAgendada, Integer status) {
 
         Usuario usuarioDestinatario = usuarioRepo.buscaUsuarioPorNome(nomeDestinatario);
         Usuario usuarioRemetente = usuarioRepo.buscaUsuarioPorNome(nomeRemetente);
+
+        SimpleDateFormat formatoData = new SimpleDateFormat("yyyy-MM-dd");
         
         Notificacao notificacao = new Notificacao();
         notificacao.setTitulo(titulo);
         notificacao.setConteudo(conteudo);
         notificacao.setNotRemetente(usuarioRemetente);
         notificacao.setNotDestinatario(usuarioDestinatario);
+
+        try {
+            notificacao.setDataDisparo(formatoData.parse(dataDisparo));
+            notificacao.setDataLimite(formatoData.parse(dataAgendada));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        notificacao.setStatus(status);
         notRepo.save(notificacao);
         return notificacao;
     }

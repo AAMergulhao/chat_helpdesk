@@ -6,23 +6,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.FetchType;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
 import br.gov.sp.fatec.springbootapp.controller.View;
 
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Date;
 
 @Entity
 @Table(name = "usr_notificacoes")
 public class Notificacao implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @JsonView(View.NotificacaoResumo.class)
     @Id
@@ -38,13 +39,25 @@ public class Notificacao implements Serializable{
     @Column(name = "not_conteudo")
     private String conteudo;
 
-    // @ManyToMany(fetch = FetchType.LAZY, mappedBy = "notificacoes")
-    // private Set<Usuario> usuarios;
+    @JsonView(View.NotificacaoResumo.class)
+    @Column(name = "not_data_disparo")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataDisparo;
+    
+    @JsonView(View.NotificacaoResumo.class)
+    @Column(name = "not_data_limite")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataLimite;
+
+    @JsonView(View.NotificacaoResumo.class)
+    @Column(name = "not_status")
+    private Integer status;
 
     @ManyToOne
+    @JsonView(View.NotificacaoResumo.class)
     @JoinColumn(name = "not_remetente_id")
     private Usuario notRemetente;
-
+    
     @ManyToOne
     @JoinColumn(name = "not_destinatario_id")
     private Usuario notDestinatario;
@@ -89,6 +102,32 @@ public class Notificacao implements Serializable{
         this.notDestinatario = notDestinatario;
     }
 
+    public Date getDataDisparo() {
+        return dataDisparo;
+    }
 
+    public void setDataDisparo(Date dataDisparo) {
+        this.dataDisparo = dataDisparo;
+    }
+
+    public Date getDataLimite() {
+        return dataLimite;
+    }
+
+    public void setDataLimite(Date dataLimite) {
+        this.dataLimite = dataLimite;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
 }

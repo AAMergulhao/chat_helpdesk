@@ -26,18 +26,19 @@ public class NotificacaoController {
     @Autowired
     private NotificacaoService notService;
 
-    @JsonView({View.NotificacaoResumo.class})
+    @JsonView({ View.NotificacaoResumo.class })
     @PostMapping
-    public ResponseEntity<Notificacao> criarNotificacao(@RequestBody ObjectNode body, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Notificacao> criarNotificacao(@RequestBody ObjectNode body,
+            UriComponentsBuilder uriComponentsBuilder) {
         String nomeRemetente = body.get("nomeRemetente").asText();
         String nomeDestinatario = body.get("nomeDestinatario").asText();
 
-        Notificacao notificacao = notService.criarNotificacao(nomeRemetente, nomeDestinatario, body.get("titulo").asText(), body.get("conteudo").asText());
+        Notificacao notificacao = notService.criarNotificacao(nomeRemetente, nomeDestinatario,
+                body.get("titulo").asText(), body.get("conteudo").asText(), body.get("dataDisparo").asText(),
+                body.get("dataAgendada").asText(), body.get("status").asInt());
 
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(
-            uriComponentsBuilder.path(
-                "/not/"+ notificacao.getId()).build().toUri());
+        responseHeaders.setLocation(uriComponentsBuilder.path("/not/" + notificacao.getId()).build().toUri());
 
         return new ResponseEntity<Notificacao>(notificacao, responseHeaders, HttpStatus.CREATED);
     }

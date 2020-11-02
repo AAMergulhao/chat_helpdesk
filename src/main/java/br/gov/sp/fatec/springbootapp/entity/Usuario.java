@@ -11,10 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.CascadeType;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -32,9 +30,9 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usr_id")
     private Long id;
-
+    
     @JsonView({ View.UsuarioResumo.class, View.AutorizacaoResumo.class, View.ConversaResumo.class,
-            View.MensagemResumo.class })
+            View.MensagemResumo.class, View.NotificacaoResumo.class })
     @Column(name = "usr_nome")
     private String nome;
 
@@ -63,10 +61,10 @@ public class Usuario implements Serializable {
     @OneToOne(mappedBy = "destinatario")
     private Mensagem mensagem;
     
-    @JsonView(View.NotificacaoResumo.class)
     @OneToMany(mappedBy = "notRemetente",fetch = FetchType.LAZY)
     private Set<Notificacao> notificacoesEnviadas;
-
+    
+    
     @OneToMany(mappedBy = "notRemetente", fetch = FetchType.LAZY)
     private Set<Notificacao> notificacoesRecebidas;
 
