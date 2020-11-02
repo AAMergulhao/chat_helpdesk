@@ -11,4 +11,6 @@ public interface NotificacaoService {
     // nomeDestinatario1, String nomeDestinatario2, String nomeRemetente, String
     // titulo, String conteudo);
     public void deletarNotificacao(Long notID);
+
+    public Notificacao atualizarStatusNotificacao(Long notID, Integer status);
 }

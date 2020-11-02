@@ -53,4 +53,9 @@ public class NotificacaoController {
     public void deletarNotificacao(@RequestBody Notificacao notificacao) {
         notService.deletarNotificacao(notificacao.getId());
     }
+
+    @PostMapping(value = "/alterarStatus")
+    public Notificacao atualizarStatus(@RequestBody ObjectNode body) {
+        return notService.atualizarStatusNotificacao(body.get("id").asLong(), body.get("status").asInt());
+    }
 }

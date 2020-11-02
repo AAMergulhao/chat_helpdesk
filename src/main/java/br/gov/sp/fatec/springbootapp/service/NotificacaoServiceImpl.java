@@ -2,6 +2,7 @@ package br.gov.sp.fatec.springbootapp.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
+import br.gov.sp.fatec.springbootapp.exception.RegistroNaoEncontradoException;
 import br.gov.sp.fatec.springbootapp.entity.Notificacao;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
 import br.gov.sp.fatec.springbootapp.repository.NotificacaoRepository;
@@ -53,32 +55,21 @@ public class NotificacaoServiceImpl implements NotificacaoService {
         notRepo.deleteById(notID);
     }
 
-    // @Transactional
-    // public LinkedList<Notificacao> criarNotificacaoDupla(String nomeDestinatario1,String nomeDestinatario2, String nomeRemetente, String titulo, String conteudo) {
-    //     LinkedList<Notificacao> notificacoes = new LinkedList<Notificacao>();
+    @Override
+    @Transactional
+    public Notificacao atualizarStatusNotificacao(Long notID, Integer status) {
 
-    //     Usuario usuarioDestinatario1 = usuarioRepo.buscaUsuarioPorNome(nomeDestinatario1);
-    //     Usuario usuarioDestinatario2 = usuarioRepo.buscaUsuarioPorNome(nomeDestinatario1);
-    //     Usuario usuarioRemetente = usuarioRepo.buscaUsuarioPorNome(nomeRemetente);
+        Optional<Notificacao> notOp = notRepo.findById(notID);
 
-    
-    //     Notificacao notificacao1 = new Notificacao();
-    //     notificacao1.setTitulo(titulo);
-    //     notificacao1.setConteudo(conteudo);
-    //     notificacao1.setSendBy(usuarioRemetente.getId());
-    //     notificacao1.setUsuario(usuarioDestinatario1);
-    //     notRepo.save(notificacao1);
-    //     notificacoes.push(notificacao1);
+        if(notOp.isPresent()){
+            Notificacao notificacao = notOp.get();
 
-    //     Notificacao notificacao2 = new Notificacao();
-    //     notificacao2.setTitulo(titulo);
-    //     notificacao2.setConteudo(conteudo);
-    //     notificacao2.setSendBy(usuarioRemetente.getId());
-    //     notificacao2.setUsuario(usuarioDestinatario2);
-    //     notRepo.save(notificacao2);
-    //     notificacoes.push(notificacao2);
-
-    //     return notificacoes;
-    // }
+            notificacao.setStatus(status);
+            notRepo.save(notificacao);
+            return notificacao;
+        
+        }
+        throw new RegistroNaoEncontradoException("Atividade não encontrada");
+    }
     
 }

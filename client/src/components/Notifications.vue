@@ -20,7 +20,7 @@
                         <p class="col s12 m3 l3">
                             <label>
                                 <input type="checkbox" id="atv_fechadas" v-on:click="buscarAtividadesPorStatus()" />
-                                <span class="white-text">Fechadas</span>
+                                <span class="white-text">Concluidas</span>
                             </label>
                         </p>
                     </div>
@@ -30,7 +30,7 @@
                         <div v-if="atividadesFiltradas.length >= 1">
                             <div class="col s12 m6 l6 pop" style="cursor: pointer" v-for="(atividade, key) in atividadesFiltradas" v-bind:key="atividade.id" v-bind:id="key">
                                 <div style="padding: 15px">
-                                    <a class="btn-floating btn-medium waves-effect waves-light right red" v-on:click="deleteAtividade(atividade.id, key)"><i class="material-icons">close</i></a>
+                                    <a class="btn-floating btn-medium waves-effect waves-light right red" v-on:click="atualizarStatus(atividade.id, key)"><i class="material-icons">close</i></a>
                                 </div>
                                 <div class="card-panel grey lighten-5 z-depth-1 hoverable modal-trigger" href="#modal_atividade" v-on:click="setModalContent(atividade, key)">
                                     <div class="row valign-wrapper">
@@ -94,8 +94,8 @@
             <div class="modal-footer center-align">
                 <a style="margin-right: 10px" class="modal-close red btn center-align"><i class="material-icons left">close</i>Fechar
                 </a>
-                <a class="modal-close green btn center-align" v-on:click="
-              deleteAtividade(atividadeSelectedID, atividadeSelectedElementID)
+                <a v-if="atividadeSelectedStatus == 1" class="modal-close green btn center-align" v-on:click="
+              atualizarStatus(atividadeSelectedID, atividadeSelectedElementID)
             "><i class="material-icons left">check</i>Concluir Atividade
                 </a>
             </div>
@@ -117,6 +117,7 @@ let atividadesFiltradas = [];
 
 let atividadeSelectedElementID;
 let atividadeSelectedID;
+let atividadeSelectedStatus;
 let atividadeSelectedTitulo;
 let atividadeSelectedTituloConteudo;
 let atividadeSelectedDataDisparo;
@@ -126,6 +127,7 @@ let atividadeSelectedRemetenteNome;
 function setModalContent(atividade, key) {
     this.atividadeSelectedElementID = key;
     this.atividadeSelectedID = atividade.id;
+    this.atividadeSelectedStatus = atividade.status;
     this.atividadeSelectedTitulo = atividade.titulo;
     this.atividadeSelectedTituloConteudo = atividade.conteudo;
     this.atividadeSelectedDataDisparo = `${atividade.dataDisparo
@@ -174,6 +176,29 @@ async function deleteAtividade(id, key) {
 
     return;
 }
+
+async function atualizarStatus(id, key) {
+    console.log(id);
+    await axios
+        .post(
+            "http://localhost:8081/spring-app/not/alterarStatus", {
+                id,
+                status: 0,
+            }, {
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                },
+            }
+        )
+        .then(() => {
+            document.getElementById(key).classList.add("popOut");
+            setTimeout(() => {
+                this.atividades.splice(key, 1);
+            }, 500);
+        });
+
+    return;
+}
 export default {
     name: "Notifications",
     data() {
@@ -182,6 +207,7 @@ export default {
             atividadesFiltradas,
             atividadeSelectedElementID,
             atividadeSelectedID,
+            atividadeSelectedStatus,
             atividadeSelectedTitulo,
             atividadeSelectedTituloConteudo,
             atividadeSelectedDataDisparo,
@@ -195,6 +221,7 @@ export default {
     methods: {
         getAtividades,
         deleteAtividade,
+        atualizarStatus,
         setModalContent,
         buscarAtividadesPorTitulo,
         buscarAtividadesPorStatus,
