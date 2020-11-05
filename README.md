@@ -40,15 +40,21 @@ funcione tanto na plataforma web quanto na mobile
 
 ## Sprint 4 (01/11)
 
-- Implementação da Inteligência Artificial 
+- Melhorias no front da tela de Funcionarios e Atividades ![](/docs/readme/sprint_4_funciionario.png)
+- Adição do campo "data de conclusão" na atribuição de Atividades ![](/docs/readme/sprint_4_calendario.png)
+- Implementação de um código de cores por status na tela de visualização de Atividades  ![](/docs/readme/sprint_4_cores_atv.png)
+- Implementação de filtros por Titulo da Atividade e por data de conclusão ![](/docs/readme/sprint_4_print_filtros.png)
 
 ## Sprint 5 (15/11)
 
-- Aperfeiçoamento da Interface Visual utilizando Vue
+- Ajustes na tela de notificação para tornar capaz que um Diretor vizualize todas as atividades que ele disparou
+- Tornar possível que um diretor veja todas as atividades atribuidas a um determinado atendente
+- Sessões de conversas dinâmicas entre o widget de chat e o painel
+- Visualização das conversas que envolvem um cliente em uma tela de histórico
 
 ## Sprint 6 (29/11)
 
-- Finalização do Projeto 
+- Ajustes de segurança no backend
 
 
 # Tecnologias 
