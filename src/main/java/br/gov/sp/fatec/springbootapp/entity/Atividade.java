@@ -64,6 +64,7 @@ public class Atividade implements Serializable{
     private Usuario atvRemetente;
     
     @ManyToOne
+    @JsonView(View.AtividadeResumo.class)
     @JoinColumn(name = "atv_destinatario_id")
     private Usuario atvDestinatario;
 

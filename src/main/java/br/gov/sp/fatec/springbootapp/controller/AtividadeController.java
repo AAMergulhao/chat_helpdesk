@@ -24,7 +24,7 @@ import br.gov.sp.fatec.springbootapp.service.AtividadeService;
 public class AtividadeController {
 
     @Autowired
-    private AtividadeService notService;
+    private AtividadeService atvService;
 
     @JsonView({ View.AtividadeResumo.class })
     @PostMapping
@@ -33,34 +33,34 @@ public class AtividadeController {
         String nomeRemetente = body.get("nomeRemetente").asText();
         String nomeDestinatario = body.get("nomeDestinatario").asText();
 
-        Atividade notificacao = notService.criarAtividade(nomeRemetente, nomeDestinatario,
+        Atividade atividade = atvService.criarAtividade(nomeDestinatario, nomeRemetente,
                 body.get("titulo").asText(), body.get("conteudo").asText(), body.get("dataDisparo").asText(),
                 body.get("dataAgendada").asText(), body.get("status").asInt());
 
         HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(uriComponentsBuilder.path("/not/" + notificacao.getId()).build().toUri());
+        responseHeaders.setLocation(uriComponentsBuilder.path("/atv/" + atividade.getId()).build().toUri());
 
-        return new ResponseEntity<Atividade>(notificacao, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<Atividade>(atividade, responseHeaders, HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public void apagarMensagem(@RequestBody Atividade notificacao) {
-        notService.deletarAtividade(notificacao.getId());
+    public void apagarMensagem(@RequestBody Atividade atividade) {
+        atvService.deletarAtividade(atividade.getId());
 
     }
 
     @PostMapping(value = "/deletar")
-    public void deletarAtividade(@RequestBody Atividade notificacao) {
-        notService.deletarAtividade(notificacao.getId());
+    public void deletarAtividade(@RequestBody Atividade atividade) {
+        atvService.deletarAtividade(atividade.getId());
     }
 
     @PostMapping(value = "/alterarStatus")
     public Atividade atualizarStatus(@RequestBody ObjectNode body) {
-        return notService.atualizarStatusAtividade(body.get("id").asLong(), body.get("status").asInt());
+        return atvService.atualizarStatusAtividade(body.get("id").asLong(), body.get("status").asInt());
     }
 
     @PostMapping(value = "/concluirAtividade")
     public Atividade concluirAtividade(@RequestBody ObjectNode body) {
-        return notService.concluirAtividade(body.get("id").asLong(), body.get("status").asInt(), body.get("dataConclusao").asText());
+        return atvService.concluirAtividade(body.get("id").asLong(), body.get("status").asInt(), body.get("dataConclusao").asText());
     }
 }

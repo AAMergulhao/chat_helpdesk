@@ -21,7 +21,7 @@ public class AtividadeServiceImpl implements AtividadeService {
     private UsuarioRepository usuarioRepo;
 
     @Autowired
-    private AtividadeRepository notRepo;
+    private AtividadeRepository atvRepo;
 
     SimpleDateFormat formatoData = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -45,27 +45,27 @@ public class AtividadeServiceImpl implements AtividadeService {
             e.printStackTrace();
         }
         atividade.setStatus(status);
-        notRepo.save(atividade);
+        atvRepo.save(atividade);
         return atividade;
     }
 
     @Override
     @Transactional
     public void deletarAtividade(Long notID) {
-        notRepo.deleteById(notID);
+        atvRepo.deleteById(notID);
     }
 
     @Override
     @Transactional
     public Atividade atualizarStatusAtividade(Long notID, Integer status) {
 
-        Optional<Atividade> notOp = notRepo.findById(notID);
+        Optional<Atividade> notOp = atvRepo.findById(notID);
 
         if(notOp.isPresent()){
             Atividade atividade = notOp.get();
 
             atividade.setStatus(status);
-            notRepo.save(atividade);
+            atvRepo.save(atividade);
             return atividade;
         
         }
@@ -74,21 +74,18 @@ public class AtividadeServiceImpl implements AtividadeService {
 
     @Override
     public Atividade concluirAtividade(Long notID, Integer status, String dataConclusao) {
-        
-
-        Optional<Atividade> notOp = notRepo.findById(notID);
+        Optional<Atividade> notOp = atvRepo.findById(notID);
 
         if(notOp.isPresent()){
             Atividade atividade = notOp.get();
 
             atividade.setStatus(status);
-            notRepo.save(atividade);
-
             try {
                 atividade.setDataConclusao(this.formatoData.parse(dataConclusao));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            atvRepo.save(atividade);
             return atividade;
         
         }

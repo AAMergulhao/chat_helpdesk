@@ -13,14 +13,20 @@
                     <div class="input-field col s12 m8 l8">
                         <p class="col s12 m3 l3">
                             <label>
-                                <input type="checkbox" id="atv_abertas" v-on:click="buscarAtividadesPorStatus()" />
-                                <span class="white-text">Abertas</span>
+                                <input type="checkbox" id="atv_avencer" v-on:click="buscarAtividadesPorStatus()" />
+                                <span class="blue-text">À vencer</span>
                             </label>
                         </p>
                         <p class="col s12 m3 l3">
                             <label>
                                 <input type="checkbox" id="atv_fechadas" v-on:click="buscarAtividadesPorStatus()" />
-                                <span class="white-text">Concluidas</span>
+                                <span class="green-text">Concluidas</span>
+                            </label>
+                        </p>
+                        <p class="col s12 m3 l3">
+                            <label>
+                                <input type="checkbox" id="atv_atrasadas" v-on:click="buscarAtividadesPorStatus()" />
+                                <span class="red-text">Atrasadas</span>
                             </label>
                         </p>
                     </div>
@@ -29,17 +35,21 @@
                     <div class="scrolable">
                         <div v-if="atividadesFiltradas.length >= 1">
                             <div class="col s12 m6 l6 pop" style="cursor: pointer" v-for="(atividade, key) in atividadesFiltradas" v-bind:key="atividade.id" v-bind:id="key">
-                                <div style="padding: 15px" v-if="atividade.status == 1">
-                                    <a class="btn-floating btn-medium waves-effect waves-light right red" v-on:click="atualizarStatus(atividade.id, key)"><i class="material-icons">close</i></a>
-                                </div>
-                                <div class="card-panel grey lighten-5 z-depth-1 hoverable modal-trigger" href="#modal_atividade" v-on:click="setModalContent(atividade, key)">
+                                <div class="card-panel grey lighten-5 z-depth-1 hoverable" v-on:click="setModalContent(atividade, key)">
                                     <div class="row valign-wrapper">
                                         <div class="col s4 m3 l3 avatar">
-                                            <i v-if="atividade.status == 1" class="large material-icons circle green">notifications</i>
-                                            <i v-if="atividade.status == 0" class="large material-icons circle red">notifications</i>
+                                            <i v-if="
+                            atividade.status == 1 &&
+                            dataConvert(atividade.dataLimite) > new Date()
+                          " class="large material-icons circle blue">notifications</i>
+                                            <i v-if="
+                            atividade.status == 1 &&
+                            dataConvert(atividade.dataLimite) < new Date()
+                          " class="large material-icons circle red">notifications</i>
+                                            <i v-if="atividade.status == 0" class="large material-icons circle green">notifications</i>
                                         </div>
                                         <div class="col s9">
-                                            <span class="black-text truncate">
+                                            <span class="black-text truncate modal-trigger" href="#modal_atividade">
                                                 <p>{{ atividade.titulo }}</p>
                                                 <br />
                                                 {{ atividade.conteudo }}
@@ -61,6 +71,12 @@
                             }}
                                                 </p>
                                             </span>
+
+                                            <a v-if="
+                            atividade.status == 1 &&
+                            (dataConvert(atividade.dataLimite) < new Date() ||
+                              dataConvert(atividade.dataLimite) > new Date())
+                          " v-on:click="concluirAtividade(atividade.id, key)" class="btn col s10 green"><i class="material-icons left">check</i> Concluir</a>
                                         </div>
                                     </div>
                                 </div>
@@ -89,13 +105,16 @@
                     {{ atividadeSelectedDataDisparo }}
                 </p>
                 <p>Prazo de conclusão: {{ atividadeSelectedDataAgendada }}</p>
+                <p v-if="atividadeSelectedStatus == 0">
+                    Concluida no dia: {{ this.dateFormat(atividadeSelectedDataConclusao) }}
+                </p>
             </div>
 
             <div class="modal-footer center-align">
                 <a style="margin-right: 10px" class="modal-close red btn center-align"><i class="material-icons left">close</i>Fechar
                 </a>
                 <a v-if="atividadeSelectedStatus == 1" class="modal-close green btn center-align" v-on:click="
-              atualizarStatus(atividadeSelectedID, atividadeSelectedElementID)
+              concluirAtividade(atividadeSelectedID, atividadeSelectedElementID)
             "><i class="material-icons left">check</i>Concluir Atividade
                 </a>
             </div>
@@ -107,6 +126,7 @@
 <script>
 import axios from "axios";
 import M from "materialize-css";
+
 let usuario;
 if (sessionStorage.usuario) {
     usuario = JSON.parse(sessionStorage.usuario);
@@ -122,7 +142,26 @@ let atividadeSelectedTitulo;
 let atividadeSelectedTituloConteudo;
 let atividadeSelectedDataDisparo;
 let atividadeSelectedDataAgendada;
+let atividadeSelectedDataConclusao;
 let atividadeSelectedRemetenteNome;
+
+function dataConvert(date) {
+    let dataSplit = `${date.slice(8, 10)}/${date
+    .split("T")[0]
+    .slice(5, 7)}/${date.split("T")[0].slice(0, 4)}`;
+    dataSplit = dataSplit.split("/");
+    let newDate = new Date(
+        parseInt(dataSplit[2], 10),
+        parseInt(dataSplit[1], 10) - 1,
+        parseInt(dataSplit[0], 10)
+    );
+    return newDate;
+}
+
+function dateFormat(date) {
+    console.log(date)
+    return `${date.slice(8, 10)}/${date.slice(5, 7)}/${date.slice(0, 4)}`
+}
 
 function setModalContent(atividade, key) {
     this.atividadeSelectedElementID = key;
@@ -130,6 +169,7 @@ function setModalContent(atividade, key) {
     this.atividadeSelectedStatus = atividade.status;
     this.atividadeSelectedTitulo = atividade.titulo;
     this.atividadeSelectedTituloConteudo = atividade.conteudo;
+    this.atividadeSelectedDataConclusao = atividade.dataConclusao;
     this.atividadeSelectedDataDisparo = `${atividade.dataDisparo
     .split("T")[0]
     .slice(8, 10)}/${atividade.dataDisparo
@@ -170,20 +210,24 @@ async function deleteAtividade(id, key) {
         .then(() => {
             document.getElementById(key).classList.add("popOut");
             setTimeout(() => {
-                this.atividades.splice(key, 1);
+                this.atvi.splice(key, 1);
             }, 500);
         });
 
     return;
 }
 
-async function atualizarStatus(id, key) {
-    console.log(id);
+async function concluirAtividade(id, key) {
+    let dataConclusao = new Date();
+    dataConclusao = `${dataConclusao.getFullYear()}-${
+    dataConclusao.getMonth() + 1
+  }-${dataConclusao.getDate()}`;
     await axios
         .post(
-            "http://localhost:8081/spring-app/atv/alterarStatus", {
+            "http://localhost:8081/spring-app/atv/concluirAtividade", {
                 id,
                 status: 0,
+                dataConclusao,
             }, {
                 headers: {
                     "Access-Control-Allow-Origin": "*",
@@ -193,7 +237,7 @@ async function atualizarStatus(id, key) {
         .then(() => {
             document.getElementById(key).classList.add("popOut");
             setTimeout(() => {
-                this.atividades.splice(key, 1);
+                this.atividadesFiltradas.splice(key, 1);
             }, 500);
         });
 
@@ -211,6 +255,7 @@ export default {
             atividadeSelectedTitulo,
             atividadeSelectedTituloConteudo,
             atividadeSelectedDataDisparo,
+            atividadeSelectedDataConclusao,
             atividadeSelectedDataAgendada,
             atividadeSelectedRemetenteNome,
         };
@@ -221,10 +266,12 @@ export default {
     methods: {
         getAtividades,
         deleteAtividade,
-        atualizarStatus,
+        concluirAtividade,
         setModalContent,
         buscarAtividadesPorTitulo,
         buscarAtividadesPorStatus,
+        dataConvert,
+        dateFormat
     },
     mounted() {
         M.Modal.init(document.querySelectorAll(".modal"));
@@ -232,6 +279,7 @@ export default {
     beforeMount: async function () {
         this.atividades = await this.getAtividades();
         this.atividadesFiltradas = this.atividades;
+        console.log(this.atividadesFiltradas);
     },
 };
 
@@ -254,40 +302,58 @@ function buscarAtividadesPorTitulo() {
 }
 
 function buscarAtividadesPorStatus() {
-    let abertas = document.getElementById("atv_abertas").checked;
+    let abertas = document.getElementById("atv_avencer").checked;
     let fechadas = document.getElementById("atv_fechadas").checked;
+    let atrasadas = document.getElementById("atv_atrasadas").checked;
     let searchInput = document.getElementById("search_title").value;
 
+    this.atividadesFiltradas = this.atividades;
     if (searchInput && searchInput != "") {
         this.buscarAtividadesPorTitulo();
     }
 
     let atividadesFiltradasStatus = [];
-    if (abertas && !fechadas) {
+    if (abertas) {
         this.atividadesFiltradas.forEach((atividade) => {
-            if (atividade.status == 1) {
+            if (
+                atividade.status == 1 &&
+                dataConvert(atividade.dataLimite) > new Date()
+            ) {
                 atividadesFiltradasStatus.push(atividade);
             }
         });
-        this.atividadesFiltradas = atividadesFiltradasStatus;
-        return;
-    } else if (!abertas && fechadas) {
+    }
+
+    if (fechadas) {
         this.atividadesFiltradas.forEach((atividade) => {
             if (atividade.status == 0) {
                 atividadesFiltradasStatus.push(atividade);
             }
         });
-        this.atividadesFiltradas = atividadesFiltradasStatus;
-        return;
-    } else {
-        if (searchInput && searchInput != "") {
-            this.atividadesFiltradas = this.atividades;
-            this.buscarAtividadesPorTitulo();
-            return;
-        }
+    }
+
+    if (atrasadas) {
+        this.atividadesFiltradas.forEach((atividade) => {
+            if (
+                atividade.status == 1 &&
+                dataConvert(atividade.dataLimite) < new Date()
+            ) {
+                atividadesFiltradasStatus.push(atividade);
+            }
+        });
+        console.log(atividadesFiltradasStatus);
+    }
+    if (
+        !abertas &&
+        !fechadas &&
+        !atrasadas &&
+        !searchInput &&
+        searchInput == ""
+    ) {
         this.atividadesFiltradas = this.atividades;
         return;
     }
+    this.atividadesFiltradas = atividadesFiltradasStatus;
 }
 </script>
 
