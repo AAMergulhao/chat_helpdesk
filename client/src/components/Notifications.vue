@@ -2,37 +2,53 @@
 <div class="row">
     <div class="col s12">
         <div class="card blue-grey darken-1 pop">
-            <div class="card-content white-text">
-                <span class="card-title" style="padding-block: 5px"><i class="material-icons">notifications</i> Atividades</span>
+            <div class="card-content">
+                <span class="card-title white-text" style="padding-block: 5px"><i class="material-icons white-text">notifications</i>
+                    Atividades</span>
                 <div class="row blue-grey darken-2">
-                    <div class="input-field col s12 m6 l6">
+                    <div class="input-field col s9 m5 l5 white-text">
                         <i class="material-icons prefix">search</i>
-                        <input v-on:keyup.enter="buscarAtividadesPorTitulo" id="search_title" type="text" class="validate white-text" />
+                        <input v-on:keyup.enter="filter_hub" id="search_title" type="text" class="validate white-text" />
                         <label for="icon_prefix">Pesquisar por titulo</label>
+                    </div>
+                    <a v-on:click="filter_hub()" class="col s2 m1 l1 btn-small green" style="margin-top:20px"><i class="material-icons">search</i></a>
+                    <div class="col l6">
+                        <div class="input-field col s6 m6 l6">
+                            <i class="material-icons prefix white-text">date_range</i>
+                            <input id="date_initial" type="text" class="datepicker white-text" />
+                            <label for="icon_prefix">Data Inicial</label>
+                        </div>
+                        <div class="input-field col s6 m6 l6">
+                            <i class="material-icons prefix white-text">date_range</i>
+                            <input id="date_final" type="text" class="datepicker white-text" />
+                            <label for="icon_prefix">Data Final</label>
+                        </div>
+                        <a v-on:click="filter_hub()" class="col s12 green btn"><i class="material-icons left">search</i>Aplicar filtro de
+                            data</a>
                     </div>
                     <div class="input-field col s12 m8 l8">
                         <p class="col s12 m3 l3">
                             <label>
-                                <input type="checkbox" id="atv_avencer" v-on:click="buscarAtividadesPorStatus()" />
+                                <input type="checkbox" id="atv_avencer" v-on:click="filter_hub()" />
                                 <span class="blue-text">À vencer</span>
                             </label>
                         </p>
                         <p class="col s12 m3 l3">
                             <label>
-                                <input type="checkbox" id="atv_fechadas" v-on:click="buscarAtividadesPorStatus()" />
+                                <input type="checkbox" id="atv_fechadas" v-on:click="filter_hub()" />
                                 <span class="green-text">Concluidas</span>
                             </label>
                         </p>
                         <p class="col s12 m3 l3">
                             <label>
-                                <input type="checkbox" id="atv_atrasadas" v-on:click="buscarAtividadesPorStatus()" />
+                                <input type="checkbox" id="atv_atrasadas" v-on:click="filter_hub()" />
                                 <span class="red-text">Atrasadas</span>
                             </label>
                         </p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="scrolable">
+                    <div class="scrolable white-text">
                         <div v-if="atividadesFiltradas.length >= 1">
                             <div class="col s12 m6 l6 pop" style="cursor: pointer" v-for="(atividade, key) in atividadesFiltradas" v-bind:key="atividade.id" v-bind:id="key">
                                 <div class="card-panel grey lighten-5 z-depth-1 hoverable" v-on:click="setModalContent(atividade, key)">
@@ -106,7 +122,8 @@
                 </p>
                 <p>Prazo de conclusão: {{ atividadeSelectedDataAgendada }}</p>
                 <p v-if="atividadeSelectedStatus == 0">
-                    Concluida no dia: {{ this.dateFormat(atividadeSelectedDataConclusao) }}
+                    Concluida no dia:
+                    {{ this.dateFormat(atividadeSelectedDataConclusao) }}
                 </p>
             </div>
 
@@ -145,22 +162,9 @@ let atividadeSelectedDataAgendada;
 let atividadeSelectedDataConclusao;
 let atividadeSelectedRemetenteNome;
 
-function dataConvert(date) {
-    let dataSplit = `${date.slice(8, 10)}/${date
-    .split("T")[0]
-    .slice(5, 7)}/${date.split("T")[0].slice(0, 4)}`;
-    dataSplit = dataSplit.split("/");
-    let newDate = new Date(
-        parseInt(dataSplit[2], 10),
-        parseInt(dataSplit[1], 10) - 1,
-        parseInt(dataSplit[0], 10)
-    );
-    return newDate;
-}
-
 function dateFormat(date) {
-    console.log(date)
-    return `${date.slice(8, 10)}/${date.slice(5, 7)}/${date.slice(0, 4)}`
+    console.log(date);
+    return `${date.slice(8, 10)}/${date.slice(5, 7)}/${date.slice(0, 4)}`;
 }
 
 function setModalContent(atividade, key) {
@@ -271,7 +275,9 @@ export default {
         buscarAtividadesPorTitulo,
         buscarAtividadesPorStatus,
         dataConvert,
-        dateFormat
+        dateFormat,
+        buscarAtividadesPorData,
+        filter_hub,
     },
     mounted() {
         M.Modal.init(document.querySelectorAll(".modal"));
@@ -279,9 +285,83 @@ export default {
     beforeMount: async function () {
         this.atividades = await this.getAtividades();
         this.atividadesFiltradas = this.atividades;
+
+        let calendar_options = {
+            format: "dd/mm/yyyy",
+            i18n: {
+                months: [
+                    "Janeiro",
+                    "Fevereiro",
+                    "Março",
+                    "Abril",
+                    "Maio",
+                    "Junho",
+                    "Julho",
+                    "Agosto",
+                    "Setembro",
+                    "Outubro",
+                    "Novembro",
+                    "Dezembro",
+                ],
+                monthsShort: [
+                    "Jan",
+                    "Fev",
+                    "Mar",
+                    "Abr",
+                    "Mai",
+                    "Jun",
+                    "Jul",
+                    "Ago",
+                    "Set",
+                    "Out",
+                    "Nov",
+                    "Dez",
+                ],
+                weekdays: [
+                    "Sábado",
+                    "Segunda",
+                    "Terça",
+                    "Quarta",
+                    "Quinta",
+                    "Sexta",
+                    "Domingo",
+                ],
+                weekdaysShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+                weekdaysAbbrev: ["D", "S", "T", "Q", "Q", "S", "S"],
+                cancel: "Fechar",
+                clear: "Limpar",
+                done: "Confirmar",
+            },
+        };
+        M.Datepicker.init(
+            document.querySelectorAll(".datepicker"),
+            calendar_options
+        );
         console.log(this.atividadesFiltradas);
     },
 };
+
+function filter_hub() {
+    let abertas = document.getElementById("atv_avencer").checked;
+    let fechadas = document.getElementById("atv_fechadas").checked;
+    let atrasadas = document.getElementById("atv_atrasadas").checked;
+    let searchInput = document.getElementById("search_title").value;
+    let initialDate = document.getElementById("date_initial").value;
+    let finalDate = document.getElementById("date_final").value;
+
+    this.atividadesFiltradas = this.atividades;
+    if (initialDate && initialDate != "" && finalDate && finalDate != "") {
+        this.buscarAtividadesPorData();
+    }
+
+    if (abertas || fechadas || atrasadas) {
+        this.buscarAtividadesPorStatus();
+    }
+
+    if (searchInput && searchInput != "") {
+        this.buscarAtividadesPorTitulo();
+    }
+}
 
 function buscarAtividadesPorTitulo() {
     let searchInput = document.getElementById("search_title").value;
@@ -297,7 +377,6 @@ function buscarAtividadesPorTitulo() {
         this.atividadesFiltradas = atividadesFiltradasTitulo;
         return;
     }
-    this.atividadesFiltradas = this.atividades;
     return;
 }
 
@@ -305,55 +384,76 @@ function buscarAtividadesPorStatus() {
     let abertas = document.getElementById("atv_avencer").checked;
     let fechadas = document.getElementById("atv_fechadas").checked;
     let atrasadas = document.getElementById("atv_atrasadas").checked;
-    let searchInput = document.getElementById("search_title").value;
-
-    this.atividadesFiltradas = this.atividades;
-    if (searchInput && searchInput != "") {
-        this.buscarAtividadesPorTitulo();
-    }
 
     let atividadesFiltradasStatus = [];
-    if (abertas) {
-        this.atividadesFiltradas.forEach((atividade) => {
-            if (
-                atividade.status == 1 &&
-                dataConvert(atividade.dataLimite) > new Date()
-            ) {
-                atividadesFiltradasStatus.push(atividade);
-            }
-        });
-    }
+    if (abertas || fechadas || atrasadas) {
+        if (abertas) {
+            this.atividadesFiltradas.forEach((atividade) => {
+                if (
+                    atividade.status == 1 &&
+                    dataConvert(atividade.dataLimite) > new Date()
+                ) {
+                    atividadesFiltradasStatus.push(atividade);
+                }
+            });
+        }
 
-    if (fechadas) {
-        this.atividadesFiltradas.forEach((atividade) => {
-            if (atividade.status == 0) {
-                atividadesFiltradasStatus.push(atividade);
-            }
-        });
-    }
+        if (fechadas) {
+            this.atividadesFiltradas.forEach((atividade) => {
+                if (atividade.status == 0) {
+                    atividadesFiltradasStatus.push(atividade);
+                }
+            });
+        }
 
-    if (atrasadas) {
-        this.atividadesFiltradas.forEach((atividade) => {
-            if (
-                atividade.status == 1 &&
-                dataConvert(atividade.dataLimite) < new Date()
-            ) {
-                atividadesFiltradasStatus.push(atividade);
-            }
+        if (atrasadas) {
+            this.atividadesFiltradas.forEach((atividade) => {
+                if (
+                    atividade.status == 1 &&
+                    dataConvert(atividade.dataLimite) < new Date()
+                ) {
+                    atividadesFiltradasStatus.push(atividade);
+                }
+            });
+            console.log(atividadesFiltradasStatus);
+        }
+        this.atividadesFiltradas = atividadesFiltradasStatus;
+    }
+}
+
+function dataConvert(date) {
+    let dataSplit;
+    if (date.indexOf("-") != -1) {
+        dataSplit = `${date.slice(8, 10)}/${date.slice(5, 7)}/${date.slice(0, 4)}`;
+    } else {
+        dataSplit = date;
+    }
+    dataSplit = dataSplit.split("/");
+    let newDate = new Date(
+        parseInt(dataSplit[2], 10),
+        parseInt(dataSplit[1], 10) - 1,
+        parseInt(dataSplit[0], 10)
+    );
+    return newDate;
+}
+
+function buscarAtividadesPorData() {
+    let initialDate = document.getElementById("date_initial").value;
+    let finalDate = document.getElementById("date_final").value;
+
+    if (initialDate && initialDate != "" && finalDate && finalDate != "") {
+        initialDate = dataConvert(initialDate);
+        finalDate = dataConvert(finalDate);
+        let objetosFiltrados = this.atividadesFiltradas.filter((atividade) => {
+            console.log(dataConvert(atividade.dataLimite));
+            return (
+                dataConvert(atividade.dataLimite) >= initialDate &&
+                dataConvert(atividade.dataLimite) <= finalDate
+            );
         });
-        console.log(atividadesFiltradasStatus);
+        console.log("filter asdasdas", objetosFiltrados);
+        this.atividadesFiltradas = objetosFiltrados;
     }
-    if (
-        !abertas &&
-        !fechadas &&
-        !atrasadas &&
-        !searchInput &&
-        searchInput == ""
-    ) {
-        this.atividadesFiltradas = this.atividades;
-        return;
-    }
-    this.atividadesFiltradas = atividadesFiltradasStatus;
 }
 </script>
 
