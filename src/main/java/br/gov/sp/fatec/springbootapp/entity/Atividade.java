@@ -20,50 +20,59 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "usr_notificacoes")
-public class Notificacao implements Serializable{
+@Table(name = "usr_atividades")
+public class Atividade implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    @JsonView(View.NotificacaoResumo.class)
+    @JsonView(View.AtividadeResumo.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "not_id")
+    @Column(name = "atv_id")
     private Long id;
 
-    @JsonView(View.NotificacaoResumo.class)
-    @Column(name = "not_titulo")
+    @JsonView(View.AtividadeResumo.class)
+    @Column(name = "atv_titulo")
     private String titulo;
 
-    @JsonView(View.NotificacaoResumo.class)
-    @Column(name = "not_conteudo")
+    @JsonView(View.AtividadeResumo.class)
+    @Column(name = "atv_conteudo")
     private String conteudo;
 
-    @JsonView(View.NotificacaoResumo.class)
-    @Column(name = "not_data_disparo")
-    @Temporal(TemporalType.TIMESTAMP)
+    @JsonView(View.AtividadeResumo.class)
+    @Column(name = "atv_data_disparo")
+    @Temporal(TemporalType.DATE)
     private Date dataDisparo;
     
-    @JsonView(View.NotificacaoResumo.class)
-    @Column(name = "not_data_limite")
-    @Temporal(TemporalType.TIMESTAMP)
+    @JsonView(View.AtividadeResumo.class)
+    @Column(name = "atv_data_limite")
+    @Temporal(TemporalType.DATE)
     private Date dataLimite;
 
-    @JsonView(View.NotificacaoResumo.class)
-    @Column(name = "not_status")
+    @JsonView(View.AtividadeResumo.class)
+    @Column(name = "atv_data_conclusao")
+    @Temporal(TemporalType.DATE)
+    private Date dataConclusao;
+
+    @JsonView(View.AtividadeResumo.class)
+    @Column(name = "atv_status")
     private Integer status;
 
     @ManyToOne
-    @JsonView(View.NotificacaoResumo.class)
-    @JoinColumn(name = "not_remetente_id")
-    private Usuario notRemetente;
+    @JsonView(View.AtividadeResumo.class)
+    @JoinColumn(name = "atv_remetente_id")
+    private Usuario atvRemetente;
     
     @ManyToOne
-    @JoinColumn(name = "not_destinatario_id")
-    private Usuario notDestinatario;
+    @JoinColumn(name = "atv_destinatario_id")
+    private Usuario atvDestinatario;
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
 
     public Long getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Long id) {
@@ -71,7 +80,7 @@ public class Notificacao implements Serializable{
     }
 
     public String getTitulo() {
-        return this.titulo;
+        return titulo;
     }
 
     public void setTitulo(String titulo) {
@@ -79,27 +88,11 @@ public class Notificacao implements Serializable{
     }
 
     public String getConteudo() {
-        return this.conteudo;
+        return conteudo;
     }
 
     public void setConteudo(String conteudo) {
         this.conteudo = conteudo;
-    }
-
-    public Usuario getNotRemetente() {
-        return notRemetente;
-    }
-
-    public void setNotRemetente(Usuario notRemetente) {
-        this.notRemetente = notRemetente;
-    }
-
-    public Usuario getNotDestinatario() {
-        return notDestinatario;
-    }
-
-    public void setNotDestinatario(Usuario notDestinatario) {
-        this.notDestinatario = notDestinatario;
     }
 
     public Date getDataDisparo() {
@@ -118,8 +111,12 @@ public class Notificacao implements Serializable{
         this.dataLimite = dataLimite;
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
+    public Date getDataConclusao() {
+        return dataConclusao;
+    }
+
+    public void setDataConclusao(Date dataConclusao) {
+        this.dataConclusao = dataConclusao;
     }
 
     public Integer getStatus() {
@@ -128,6 +125,22 @@ public class Notificacao implements Serializable{
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Usuario getAtvRemetente() {
+        return atvRemetente;
+    }
+
+    public void setAtvRemetente(Usuario atvRemetente) {
+        this.atvRemetente = atvRemetente;
+    }
+
+    public Usuario getAtvDestinatario() {
+        return atvDestinatario;
+    }
+
+    public void setAtvDestinatario(Usuario atvDestinatario) {
+        this.atvDestinatario = atvDestinatario;
     }
 
 }

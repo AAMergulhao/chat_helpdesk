@@ -10,5 +10,5 @@ public class View {
 
     public static class MensagemResumo {}
 
-    public static class NotificacaoResumo {}
+    public static class AtividadeResumo {}
 }

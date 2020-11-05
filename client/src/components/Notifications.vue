@@ -29,7 +29,7 @@
                     <div class="scrolable">
                         <div v-if="atividadesFiltradas.length >= 1">
                             <div class="col s12 m6 l6 pop" style="cursor: pointer" v-for="(atividade, key) in atividadesFiltradas" v-bind:key="atividade.id" v-bind:id="key">
-                                <div style="padding: 15px">
+                                <div style="padding: 15px" v-if="atividade.status == 1">
                                     <a class="btn-floating btn-medium waves-effect waves-light right red" v-on:click="atualizarStatus(atividade.id, key)"><i class="material-icons">close</i></a>
                                 </div>
                                 <div class="card-panel grey lighten-5 z-depth-1 hoverable modal-trigger" href="#modal_atividade" v-on:click="setModalContent(atividade, key)">
@@ -140,12 +140,12 @@ function setModalContent(atividade, key) {
     .slice(8, 10)}/${atividade.dataLimite
     .split("T")[0]
     .slice(5, 7)}/${atividade.dataLimite.split("T")[0].slice(0, 4)}`;
-    this.atividadeSelectedRemetenteNome = atividade.notRemetente.nome;
+    this.atividadeSelectedRemetenteNome = atividade.atvRemetente.nome;
     return;
 }
 async function getAtividades() {
     atividades = await axios.get(
-        `http://localhost:8081/spring-app/usuario/buscarNotificacoesEnviadas?nome=${usuario.nome}`, {
+        `http://localhost:8081/spring-app/usuario/buscarAtividadesRecebidas?nome=${usuario.nome}`, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
@@ -159,7 +159,7 @@ async function deleteAtividade(id, key) {
     console.log(id);
     await axios
         .post(
-            "http://localhost:8081/spring-app/not/deletar", {
+            "http://localhost:8081/spring-app/atv/deletar", {
                 id,
             }, {
                 headers: {
@@ -181,7 +181,7 @@ async function atualizarStatus(id, key) {
     console.log(id);
     await axios
         .post(
-            "http://localhost:8081/spring-app/not/alterarStatus", {
+            "http://localhost:8081/spring-app/atv/alterarStatus", {
                 id,
                 status: 0,
             }, {

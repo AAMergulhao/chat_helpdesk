@@ -16,12 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
-import br.gov.sp.fatec.springbootapp.entity.Notificacao;
 import br.gov.sp.fatec.springbootapp.entity.Conversa;
 import br.gov.sp.fatec.springbootapp.repository.AutorizacaoRepository;
 import br.gov.sp.fatec.springbootapp.repository.UsuarioRepository;
-import br.gov.sp.fatec.springbootapp.repository.NotificacaoRepository;
-import br.gov.sp.fatec.springbootapp.service.NotificacaoService;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 
 
@@ -40,23 +37,6 @@ class SpringBootAppApplicationTests {
 
     @Autowired
     private SegurancaService segService;
-
-    @Autowired
-    private NotificacaoRepository notRepo;
-
-    @Autowired
-    private NotificacaoService notService;
-
-
-
-    //Serviço que cria notificações
-    @Test
-    void testeCriarNotificacao(){
-        Notificacao notificacao = notService.criarNotificacao("Fabiola","Arthur","Teste", "teste conteudo 2");
-        assertNotNull(notificacao.getId());
-    }
-
-    
 
     @Test
     void testaInsercao(){

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.gov.sp.fatec.springbootapp.entity.Autorizacao;
-import br.gov.sp.fatec.springbootapp.entity.Notificacao;
+import br.gov.sp.fatec.springbootapp.entity.Atividade;
 import br.gov.sp.fatec.springbootapp.entity.Usuario;
 import br.gov.sp.fatec.springbootapp.service.SegurancaService;
 
@@ -80,31 +80,31 @@ public class UsuarioController {
         return segService.buscarAutorizacaoPorNome(autorizacao);
     }
     
-    @JsonView(View.NotificacaoResumo.class)
-    @GetMapping(value = "/buscarNotificacoesEnviadas")
-    public ResponseEntity<Set<Notificacao>> buscarNotificacoesEnviadas(@RequestParam("nome") String nome, UriComponentsBuilder uriComponentsBuilder){
+    @JsonView(View.AtividadeResumo.class)
+    @GetMapping(value = "/buscarAtividadesEnviadas")
+    public ResponseEntity<Set<Atividade>> buscarNotificacoesEnviadas(@RequestParam("nome") String nome, UriComponentsBuilder uriComponentsBuilder){
         Usuario usuario = segService.buscarUsuarioPorNome(nome);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(
             uriComponentsBuilder.path(
-                "/usuario/buscarNotificacoesEnviadas/"+ usuario.getId()).build().toUri());
-        Set<Notificacao> notificacoes = usuario.getNotificacoesEnviadas();
-        return  new ResponseEntity<Set<Notificacao>>(notificacoes, responseHeaders, HttpStatus.CREATED);
+                "/usuario/buscarAtividadesEnviadas/"+ usuario.getId()).build().toUri());
+        Set<Atividade> notificacoes = usuario.getAtividadesEnviadas();
+        return  new ResponseEntity<Set<Atividade>>(notificacoes, responseHeaders, HttpStatus.CREATED);
         
     }
 
-    @JsonView(View.NotificacaoResumo.class)
-    @PutMapping(value = "/buscarNotificacoesRecebidas")
-    public ResponseEntity<Set<Notificacao>> buscarNotificacoesRecebidas(@RequestParam("nome") String nome, UriComponentsBuilder uriComponentsBuilder){
+    @JsonView(View.AtividadeResumo.class)
+    @GetMapping(value = "/buscarAtividadesRecebidas")
+    public ResponseEntity<Set<Atividade>> buscarAtividadesRecebidas(@RequestParam("nome") String nome, UriComponentsBuilder uriComponentsBuilder){
         Usuario usuario = segService.buscarUsuarioPorNome(nome);
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(
             uriComponentsBuilder.path(
-                "/usuario/buscarNotificacoesEnviadas/"+ usuario.getId()).build().toUri());
-        Set<Notificacao> notificacoes = usuario.getNotificacoesRecebidas();
-        return  new ResponseEntity<Set<Notificacao>>(notificacoes, responseHeaders, HttpStatus.CREATED);
+                "/usuario/buscarAtividadesRecebidas/"+ usuario.getId()).build().toUri());
+        Set<Atividade> atividades = usuario.getAtividadesRecebidas();
+        return  new ResponseEntity<Set<Atividade>>(atividades, responseHeaders, HttpStatus.CREATED);
         
     }
 

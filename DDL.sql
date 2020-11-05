@@ -30,18 +30,19 @@ create table uau_usuario_autorizacao (
   foreign key aut_autorizacao_fk (aut_id) references aut_autorizacao (aut_id) on delete restrict on update cascade
 );
 
-create table usr_notificacoes (
-  not_id bigint unsigned not null auto_increment,
-  not_remetente_id bigint unsigned not null,
-  not_destinatario_id bigint unsigned not null,
-  not_titulo varchar(20) not null,
-  not_data_disparo date not null,
-  not_data_limite date not null,
-  not_status int not null,
-  not_conteudo varchar(255) not null,
-  primary key (not_id),
-  foreign key (not_remetente_id) references usr_usuario (usr_id) on delete restrict on update cascade,
-  foreign key (not_destinatario_id) references usr_usuario (usr_id) on delete restrict on update cascade
+create table usr_atividades (
+  atv_id bigint unsigned not null auto_increment,
+  atv_remetente_id bigint unsigned not null,
+  atv_destinatario_id bigint unsigned not null,
+  atv_titulo varchar(20) not null,
+  atv_data_disparo date not null,
+  atv_data_limite date not null,
+  atv_data_conclusao date,
+  atv_status int not null,
+  atv_conteudo varchar(255) not null,
+  primary key (atv_id),
+  foreign key (atv_remetente_id) references usr_usuario (usr_id) on delete restrict on update cascade,
+  foreign key (atv_destinatario_id) references usr_usuario (usr_id) on delete restrict on update cascade
 );
 
 

@@ -15,47 +15,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.gov.sp.fatec.springbootapp.entity.Notificacao;
-import br.gov.sp.fatec.springbootapp.service.NotificacaoService;
+import br.gov.sp.fatec.springbootapp.entity.Atividade;
+import br.gov.sp.fatec.springbootapp.service.AtividadeService;
 
 @RestController
-@RequestMapping(value = "/not")
+@RequestMapping(value = "/atv")
 @CrossOrigin
-public class NotificacaoController {
+public class AtividadeController {
 
     @Autowired
-    private NotificacaoService notService;
+    private AtividadeService notService;
 
-    @JsonView({ View.NotificacaoResumo.class })
+    @JsonView({ View.AtividadeResumo.class })
     @PostMapping
-    public ResponseEntity<Notificacao> criarNotificacao(@RequestBody ObjectNode body,
+    public ResponseEntity<Atividade> criarAtividade(@RequestBody ObjectNode body,
             UriComponentsBuilder uriComponentsBuilder) {
         String nomeRemetente = body.get("nomeRemetente").asText();
         String nomeDestinatario = body.get("nomeDestinatario").asText();
 
-        Notificacao notificacao = notService.criarNotificacao(nomeRemetente, nomeDestinatario,
+        Atividade notificacao = notService.criarAtividade(nomeRemetente, nomeDestinatario,
                 body.get("titulo").asText(), body.get("conteudo").asText(), body.get("dataDisparo").asText(),
                 body.get("dataAgendada").asText(), body.get("status").asInt());
 
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(uriComponentsBuilder.path("/not/" + notificacao.getId()).build().toUri());
 
-        return new ResponseEntity<Notificacao>(notificacao, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<Atividade>(notificacao, responseHeaders, HttpStatus.CREATED);
     }
 
     @DeleteMapping
-    public void apagarMensagem(@RequestBody Notificacao notificacao) {
-        notService.deletarNotificacao(notificacao.getId());
+    public void apagarMensagem(@RequestBody Atividade notificacao) {
+        notService.deletarAtividade(notificacao.getId());
 
     }
 
     @PostMapping(value = "/deletar")
-    public void deletarNotificacao(@RequestBody Notificacao notificacao) {
-        notService.deletarNotificacao(notificacao.getId());
+    public void deletarAtividade(@RequestBody Atividade notificacao) {
+        notService.deletarAtividade(notificacao.getId());
     }
 
     @PostMapping(value = "/alterarStatus")
-    public Notificacao atualizarStatus(@RequestBody ObjectNode body) {
-        return notService.atualizarStatusNotificacao(body.get("id").asLong(), body.get("status").asInt());
+    public Atividade atualizarStatus(@RequestBody ObjectNode body) {
+        return notService.atualizarStatusAtividade(body.get("id").asLong(), body.get("status").asInt());
+    }
+
+    @PostMapping(value = "/concluirAtividade")
+    public Atividade concluirAtividade(@RequestBody ObjectNode body) {
+        return notService.concluirAtividade(body.get("id").asLong(), body.get("status").asInt(), body.get("dataConclusao").asText());
     }
 }
