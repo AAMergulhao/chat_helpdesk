@@ -47,7 +47,7 @@ funcione tanto na plataforma web quanto na mobile
 
 ## Sprint 5 (15/11)
 
-- Ajustes na tela de notificação para tornar capaz que um Diretor vizualize todas as atividades que ele disparou
+- Ajustes na tela de notificação para tornar possivel que um Diretor vizualize todas as atividades que ele disparou
 - Tornar possível que um diretor veja todas as atividades atribuidas a um determinado atendente
 - Sessões de conversas dinâmicas entre o widget de chat e o painel
 - Visualização das conversas que envolvem um cliente em uma tela de histórico
